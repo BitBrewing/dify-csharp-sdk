@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DifyAI", "DifyAI\DifyAI.csproj", "{180D4C16-0F2C-484F-BD91-F1F90040102E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DifyAI.Test", "DifyAI.Test\DifyAI.Test.csproj", "{C5718447-4EAF-491B-95EC-42374E444AB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{180D4C16-0F2C-484F-BD91-F1F90040102E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{180D4C16-0F2C-484F-BD91-F1F90040102E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{180D4C16-0F2C-484F-BD91-F1F90040102E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{180D4C16-0F2C-484F-BD91-F1F90040102E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5718447-4EAF-491B-95EC-42374E444AB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5718447-4EAF-491B-95EC-42374E444AB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5718447-4EAF-491B-95EC-42374E444AB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5718447-4EAF-491B-95EC-42374E444AB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {835FE0D9-A01E-4E8C-BCB6-A6B14F556126}
+	EndGlobalSection
+EndGlobal

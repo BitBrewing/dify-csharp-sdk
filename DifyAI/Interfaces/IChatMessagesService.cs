@@ -1,0 +1,29 @@
+﻿using DifyAI.ObjectModels;
+using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace DifyAI.Interfaces
+{
+    public interface IChatMessagesService
+    {
+        /// <summary>
+        /// 发送对话消息（阻塞模式）
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<CreateCompletionResponse> CreateCompletionAsync(CreateCompletionRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 发送对话消息（流式模式）
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        IAsyncEnumerable<CreateCompletionStreamResponse> CreateCompletionStreamAsync(CreateCompletionRequest request, CancellationToken cancellationToken = default);
+    }
+}
