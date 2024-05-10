@@ -20,7 +20,7 @@ namespace DifyAI.Test
             services.AddDifyAIService(x =>
             {
                 x.BaseDomain = "http://10.13.60.91/v1";
-                x.c = "app-3ppSoe6ynEvBgTpugCyenxr6";
+                x.ApiKey = "app-3ppSoe6ynEvBgTpugCyenxr6";
             });
 
             var app = services.BuildServiceProvider();

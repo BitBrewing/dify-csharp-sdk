@@ -9,7 +9,7 @@ services
     .AddDifyAI(x =>
     {
         x.BaseDomain = "xxx";
-        x.BaseDomain = "xxx";
+        x.ApiKey = "xxx";
     });
 ```
 
