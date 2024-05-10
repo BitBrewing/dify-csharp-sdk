@@ -25,5 +25,14 @@ namespace DifyAI.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         IAsyncEnumerable<CreateCompletionStreamResponse> CreateCompletionStreamAsync(CreateCompletionRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 停止响应
+        /// </summary>
+        /// <remarks>仅支持流式模式</remarks>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<StopCompletionResponse> StopCompletionStreamAsync(StopCompletionRequest request, CancellationToken cancellationToken = default);
     }
 }

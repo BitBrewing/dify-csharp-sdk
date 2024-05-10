@@ -63,13 +63,6 @@ namespace DifyAI.Internals
             }
         }
 
-        /// <summary>
-        /// 停止响应
-        /// </summary>
-        /// <remarks>仅支持流式模式</remarks>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public async Task<StopCompletionResponse> StopCompletionStreamAsync(StopCompletionRequest request, CancellationToken cancellationToken = default)
         {
             return await _httpClient.PostAsAsync<StopCompletionResponse>($"chat-messages/{Uri.EscapeDataString(request.TaskId)}/stop", request, cancellationToken);
