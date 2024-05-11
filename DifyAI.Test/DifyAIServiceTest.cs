@@ -17,11 +17,13 @@ namespace DifyAI.Test
         public DifyAIServiceTest()
         {
             var services = new ServiceCollection();
-            services.AddSingleton<IApiKeyProvider, ApiKeyProvider>();
-            services.AddDifyAIService(x =>
-            {
-                x.BaseDomain = "http://10.13.60.91/v1";
-            });
+
+            services
+                .AddDifyAIService(x =>
+                {
+                    x.BaseDomain = "http://10.13.60.91/v1";
+                    x.ApiKey = "app-3ppSoe6ynEvBgTpugCyenxr6";
+                });
 
             var app = services.BuildServiceProvider();
             _difyAIService = app.GetRequiredService<IDifyAIService>();
@@ -32,8 +34,8 @@ namespace DifyAI.Test
         {
             var req = new CreateCompletionRequest
             {
-                Query = "帮我查下5月1号从广州到首尔的机票，10号回来",
-                User = "@TEST_USER",
+                Query = "你好",
+                User = "user123",
             };
             var rsp = await _difyAIService.ChatMessages.CreateCompletionAsync(req);
             Assert.NotNull(rsp.MessageId);
@@ -44,8 +46,8 @@ namespace DifyAI.Test
         {
             var req = new CreateCompletionRequest
             {
-                Query = "帮我查下5月1号从广州到首尔的机票，10号回来",
-                User = "@TEST_USER",
+                Query = "你好",
+                User = "user123",
             };
 
             await foreach (var rsp in _difyAIService.ChatMessages.CreateCompletionStreamAsync(req))

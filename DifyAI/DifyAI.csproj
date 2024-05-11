@@ -4,10 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <LangVersion>preview</LangVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <NoWarn>CS1591</NoWarn>
     <Authors>BitBrewing</Authors>
     <Company>Yiqifei</Company>
     <Description>DifyAI SDK</Description>
-    <Version>1.1.0-beta1</Version>
+    <Version>1.1.0</Version>
     <PackageProjectUrl>https://github.com/BitBrewing/dify-csharp-sdk</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>dify</PackageTags>

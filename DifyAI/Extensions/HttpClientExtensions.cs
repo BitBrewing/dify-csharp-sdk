@@ -1,4 +1,5 @@
 ﻿using DifyAI.ObjectModels;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,9 +22,18 @@ namespace DifyAI
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
-        public static async Task<T> PostAsAsync<T>(this HttpClient httpClient, string requestUri, object requestModel, CancellationToken cancellationToken)
+        public static async Task<T> PostAsAsync<T>(this HttpClient httpClient, string requestUri, DifyAIRequestBase requestModel, CancellationToken cancellationToken)
         {
-            using var responseMessage = await httpClient.PostAsJsonAsync(requestUri, requestModel, cancellationToken);
+            if (!string.IsNullOrEmpty(requestModel.ApiKey))
+            {
+                httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {requestModel.ApiKey}");
+            }
+
+            var json = JsonSerializer.Serialize(requestModel, requestModel.GetType(), _defaultSerializerOptions);
+            using var conetnt = new StringContent(json, Encoding.UTF8, "application/json");
+            using var responseMessage = await httpClient.PostAsync(requestUri, conetnt, cancellationToken);
+
+            //using var responseMessage = await httpClient.PostAsJsonAsync(requestUri, requestModel, _defaultSerializerOptions, cancellationToken);
             if (!responseMessage.IsSuccessStatusCode)
             {
                 if (IsJsonContentType(responseMessage))
@@ -33,23 +43,39 @@ namespace DifyAI
                 }
                 else
                 {
-                    responseMessage.EnsureSuccessStatusCode();
-                    return default;
+                    throw new HttpRequestException($"Response status code does not indicate success: {(int)responseMessage.StatusCode} ({responseMessage.ReasonPhrase}).");
                 }
             }
-            else
-            {
-                return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
-            }
+
+            return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
         }
 
-        public static async Task<Stream> PostAsStreamAsync(this HttpClient httpClient, string requestUri, object requestModel, CancellationToken cancellationToken)
+        public static async Task<Stream> PostAsStreamAsync(this HttpClient httpClient, string requestUri, DifyAIRequestBase requestModel, CancellationToken cancellationToken)
         {
-            using var content = JsonContent.Create(requestModel, null, _defaultSerializerOptions);
+            if (!string.IsNullOrEmpty(requestModel.ApiKey))
+            {
+                httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {requestModel.ApiKey}");
+            }
+
+            using var content = JsonContent.Create(requestModel, requestModel.GetType(), null, _defaultSerializerOptions);
             using var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
-            
+
             requestMessage.Content = content;
             var responseMessage = await httpClient.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                if (IsJsonContentType(responseMessage))
+                {
+                    var error = await responseMessage.Content.ReadFromJsonAsync<Error>(_defaultSerializerOptions, cancellationToken);
+                    throw new DifyAIException(error.Code, error.Message, error.Status);
+                }
+                else
+                {
+                    throw new HttpRequestException($"Response status code does not indicate success: {(int)responseMessage.StatusCode} ({responseMessage.ReasonPhrase}).");
+                }
+            }
+
             return await responseMessage.Content.ReadAsStreamAsync(cancellationToken);
         }
 

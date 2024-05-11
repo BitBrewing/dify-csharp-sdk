@@ -31,11 +31,8 @@ namespace Microsoft.Extensions.DependencyInjection
                         host.Path += "/";
                     }
 
-                    var apiKeyProvider = provider.GetService<IApiKeyProvider>();
-                    var apiKey = apiKeyProvider?.GetApiKey() ?? options.ApiKey;
-
                     httpClient.BaseAddress = host.Uri;
-                    httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {apiKey}");
+                    httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {options.ApiKey}");
                 });
         }
     }

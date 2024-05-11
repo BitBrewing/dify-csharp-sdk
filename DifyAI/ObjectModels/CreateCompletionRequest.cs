@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class CreateCompletionRequest
+    public class CreateCompletionRequest: DifyAIRequestBase
     {
         /// <summary>
         /// 用户输入/提问内容。
