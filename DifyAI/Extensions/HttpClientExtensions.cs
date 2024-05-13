@@ -6,6 +6,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -96,6 +97,17 @@ namespace DifyAI
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
             return await responseMessage.Content.ReadAsStreamAsync(cancellationToken);
+        }
+
+        public static async Task<T> UploadAsAsync<T>(this HttpClient httpClient, string requestUri, MultipartFormDataContent formDataContent, RequestBase requestModel, CancellationToken cancellationToken)
+        {
+            httpClient.AddAuthorization(requestModel.ApiKey);
+
+            using var responseMessage = await httpClient.PostAsync(requestUri, formDataContent, cancellationToken);
+
+            await responseMessage.ValidateResponseAsync(cancellationToken);
+
+            return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
         }
 
         private static bool IsJsonContentType(HttpResponseMessage response)
