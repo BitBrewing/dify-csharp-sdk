@@ -48,7 +48,18 @@ namespace DifyAI
             }
         }
 
-        public static async Task PostAsync(this HttpClient httpClient, string requestUri, DifyAIRequestBase requestModel, CancellationToken cancellationToken)
+        public static async Task<T> GetAsAsync<T>(this HttpClient httpClient, string requestUri, RequestBase requestModel, CancellationToken cancellationToken)
+        {
+            httpClient.AddAuthorization(requestModel.ApiKey);
+
+            using var responseMessage = await httpClient.GetAsync(requestUri, cancellationToken);
+
+            await responseMessage.ValidateResponseAsync(cancellationToken);
+
+            return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+        }
+
+        public static async Task PostAsync(this HttpClient httpClient, string requestUri, RequestBase requestModel, CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
@@ -59,7 +70,7 @@ namespace DifyAI
             await responseMessage.ValidateResponseAsync(cancellationToken);
         }
 
-        public static async Task<T> PostAsAsync<T>(this HttpClient httpClient, string requestUri, DifyAIRequestBase requestModel, CancellationToken cancellationToken)
+        public static async Task<T> PostAsAsync<T>(this HttpClient httpClient, string requestUri, RequestBase requestModel, CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
@@ -72,7 +83,7 @@ namespace DifyAI
             return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
         }
 
-        public static async Task<Stream> PostAsStreamAsync(this HttpClient httpClient, string requestUri, DifyAIRequestBase requestModel, CancellationToken cancellationToken)
+        public static async Task<Stream> PostAsStreamAsync(this HttpClient httpClient, string requestUri, RequestBase requestModel, CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 

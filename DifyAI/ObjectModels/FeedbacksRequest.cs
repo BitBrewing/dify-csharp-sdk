@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class FeedbacksRequest: DifyAIRequestBase
+    public class FeedbacksRequest: RequestBase
     {
         /// <summary>
         /// 消息 ID

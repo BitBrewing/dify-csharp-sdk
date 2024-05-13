@@ -15,5 +15,10 @@ namespace DifyAI.Internals
         {
             await _httpClient.PostAsync($"messages/{Uri.EscapeDataString(request.MessageId)}/feedbacks", request, cancellationToken);
         }
+
+        public async Task<SuggestedResponse> SuggestedAsync(SuggestedRequest request, CancellationToken cancellationToken = default)
+        {
+            return await _httpClient.GetAsAsync<SuggestedResponse>($"messages/{Uri.EscapeDataString(request.MessageId)}/suggested", request, cancellationToken);
+        }
     }
 }

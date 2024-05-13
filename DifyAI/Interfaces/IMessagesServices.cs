@@ -17,5 +17,13 @@ namespace DifyAI.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task FeedbacksAsync(FeedbacksRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 获取下一轮建议问题列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<SuggestedResponse> SuggestedAsync(SuggestedRequest request, CancellationToken cancellationToken = default);
     }
 }

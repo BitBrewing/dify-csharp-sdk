@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class StopCompletionRequest: DifyAIRequestBase
+    public class StopCompletionRequest: RequestBase
     {
         /// <summary>
         /// 任务 ID，可在流式返回 Chunk 中获取

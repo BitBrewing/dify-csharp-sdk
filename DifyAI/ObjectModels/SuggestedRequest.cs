@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -7,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public abstract class DifyAIRequestBase
+    public class SuggestedRequest: RequestBase
     {
         /// <summary>
-        /// API 密钥，默认为注册时的 options.ApiKey
+        /// 消息 ID
         /// </summary>
+        [Required]
         [JsonIgnore]
-        public string ApiKey { get; set; }
+        public string MessageId { get; set; }
     }
 }
