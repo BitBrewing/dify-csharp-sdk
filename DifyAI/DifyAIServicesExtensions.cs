@@ -1,4 +1,5 @@
-﻿using DifyAI.Interfaces;
+﻿using DifyAI;
+using DifyAI.Interfaces;
 using DifyAI.Internals;
 using DifyAI.Options;
 using Microsoft.Extensions.Options;
@@ -32,7 +33,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     }
 
                     httpClient.BaseAddress = host.Uri;
-                    httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {options.ApiKey}");
+                    httpClient.AddAuthorization(options.ApiKey);
                 });
         }
     }

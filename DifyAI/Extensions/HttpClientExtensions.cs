@@ -16,24 +16,24 @@ namespace DifyAI
 {
     internal static class HttpClientExtensions
     {
+        const string JsonContentType = "application/json";
+
         private static readonly JsonSerializerOptions _defaultSerializerOptions = new()
         {
             WriteIndented = false,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
-        public static async Task<T> PostAsAsync<T>(this HttpClient httpClient, string requestUri, DifyAIRequestBase requestModel, CancellationToken cancellationToken)
+        public static void AddAuthorization(this HttpClient httpClient, string apiKey)
         {
-            if (!string.IsNullOrEmpty(requestModel.ApiKey))
+            if (!string.IsNullOrEmpty(apiKey))
             {
-                httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {requestModel.ApiKey}");
+                httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {apiKey}");
             }
+        }
 
-            var json = JsonSerializer.Serialize(requestModel, requestModel.GetType(), _defaultSerializerOptions);
-            using var conetnt = new StringContent(json, Encoding.UTF8, "application/json");
-            using var responseMessage = await httpClient.PostAsync(requestUri, conetnt, cancellationToken);
-
-            //using var responseMessage = await httpClient.PostAsJsonAsync(requestUri, requestModel, _defaultSerializerOptions, cancellationToken);
+        private static async Task ValidateResponseAsync(this HttpResponseMessage responseMessage, CancellationToken cancellationToken)
+        {
             if (!responseMessage.IsSuccessStatusCode)
             {
                 if (IsJsonContentType(responseMessage))
@@ -46,16 +46,24 @@ namespace DifyAI
                     throw new HttpRequestException($"Response status code does not indicate success: {(int)responseMessage.StatusCode} ({responseMessage.ReasonPhrase}).");
                 }
             }
+        }
+
+        public static async Task<T> PostAsAsync<T>(this HttpClient httpClient, string requestUri, DifyAIRequestBase requestModel, CancellationToken cancellationToken)
+        {
+            httpClient.AddAuthorization(requestModel.ApiKey);
+
+            var json = JsonSerializer.Serialize(requestModel, requestModel.GetType(), _defaultSerializerOptions);
+            using var conetnt = new StringContent(json, Encoding.UTF8, JsonContentType);
+            using var responseMessage = await httpClient.PostAsync(requestUri, conetnt, cancellationToken);
+
+            await responseMessage.ValidateResponseAsync(cancellationToken);
 
             return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
         }
 
         public static async Task<Stream> PostAsStreamAsync(this HttpClient httpClient, string requestUri, DifyAIRequestBase requestModel, CancellationToken cancellationToken)
         {
-            if (!string.IsNullOrEmpty(requestModel.ApiKey))
-            {
-                httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {requestModel.ApiKey}");
-            }
+            httpClient.AddAuthorization(requestModel.ApiKey);
 
             using var content = JsonContent.Create(requestModel, requestModel.GetType(), null, _defaultSerializerOptions);
             using var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
@@ -63,25 +71,14 @@ namespace DifyAI
             requestMessage.Content = content;
             var responseMessage = await httpClient.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
 
-            if (!responseMessage.IsSuccessStatusCode)
-            {
-                if (IsJsonContentType(responseMessage))
-                {
-                    var error = await responseMessage.Content.ReadFromJsonAsync<Error>(_defaultSerializerOptions, cancellationToken);
-                    throw new DifyAIException(error.Code, error.Message, error.Status);
-                }
-                else
-                {
-                    throw new HttpRequestException($"Response status code does not indicate success: {(int)responseMessage.StatusCode} ({responseMessage.ReasonPhrase}).");
-                }
-            }
+            await responseMessage.ValidateResponseAsync(cancellationToken);
 
             return await responseMessage.Content.ReadAsStreamAsync(cancellationToken);
         }
 
         private static bool IsJsonContentType(HttpResponseMessage response)
         {
-            return response.Content.Headers.ContentType?.MediaType?.Equals("application/json", StringComparison.OrdinalIgnoreCase) ?? false;
+            return response.Content.Headers.ContentType?.MediaType?.Equals(JsonContentType, StringComparison.OrdinalIgnoreCase) ?? false;
         }
 
         private class Error
