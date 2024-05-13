@@ -9,7 +9,7 @@ using DifyAI.ObjectModels;
 
 namespace DifyAI.Internals
 {
-    internal partial class DifyAIService: IDifyAIService
+    internal partial class DifyAIService : IDifyAIService
     {
         private readonly HttpClient _httpClient;
 
@@ -19,5 +19,6 @@ namespace DifyAI.Internals
         }
 
         public IChatMessagesService ChatMessages => this;
+        public IMessagesServices Messages => this;
     }
 }
