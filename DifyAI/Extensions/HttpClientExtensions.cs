@@ -48,7 +48,7 @@ namespace DifyAI
             }
         }
 
-        public static async Task<T> PostAsAsync<T>(this HttpClient httpClient, string requestUri, DifyAIRequestBase requestModel, CancellationToken cancellationToken)
+        public static async Task PostAsync(this HttpClient httpClient, string requestUri, DifyAIRequestBase requestModel, CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
@@ -56,6 +56,17 @@ namespace DifyAI
             using var conetnt = new StringContent(json, Encoding.UTF8, JsonContentType);
             using var responseMessage = await httpClient.PostAsync(requestUri, conetnt, cancellationToken);
 
+            await responseMessage.ValidateResponseAsync(cancellationToken);
+        }
+
+        public static async Task<T> PostAsAsync<T>(this HttpClient httpClient, string requestUri, DifyAIRequestBase requestModel, CancellationToken cancellationToken)
+        {
+            httpClient.AddAuthorization(requestModel.ApiKey);
+
+            var json = JsonSerializer.Serialize(requestModel, requestModel.GetType(), _defaultSerializerOptions);
+            using var conetnt = new StringContent(json, Encoding.UTF8, JsonContentType);
+            using var responseMessage = await httpClient.PostAsync(requestUri, conetnt, cancellationToken);
+            
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
             return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);

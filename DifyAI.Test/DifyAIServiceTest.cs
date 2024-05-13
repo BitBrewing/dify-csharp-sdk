@@ -35,7 +35,7 @@ namespace DifyAI.Test
             var req = new CreateCompletionRequest
             {
                 Query = "你好",
-                User = "user123",
+                //User = "user123",
             };
             var rsp = await _difyAIService.ChatMessages.CreateCompletionAsync(req);
             Assert.NotNull(rsp.MessageId);

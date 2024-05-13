@@ -33,16 +33,17 @@ namespace DifyAI.ObjectModels
         public string ResponseMode { get; internal set; }
 
         /// <summary>
+        /// 用户标识，用于定义终端用户的身份，方便检索、统计。 由开发者定义规则，需保证用户标识在应用内唯一。
+        /// </summary>
+        [Required]
+        [JsonPropertyName("user")]
+        public string User { get; set; }
+
+        /// <summary>
         /// （选填）会话 ID，需要基于之前的聊天记录继续对话，必须传之前消息的 conversation_id。
         /// </summary>
         [JsonPropertyName("conversation_id")]
         public string ConversationId { get; set; }
-
-        /// <summary>
-        /// 用户标识，用于定义终端用户的身份，方便检索、统计。 由开发者定义规则，需保证用户标识在应用内唯一。
-        /// </summary>
-        [JsonPropertyName("user")]
-        public string User { get; set; }
 
         /// <summary>
         /// （选填）自动生成标题，默认 true。 若设置为 false，则可通过调用会话重命名接口并设置 auto_generate 为 true 实现异步生成标题。
