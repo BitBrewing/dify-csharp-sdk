@@ -63,9 +63,9 @@ namespace DifyAI.Internals
             }
         }
 
-        public async Task<StopCompletionResponse> StopCompletionStreamAsync(StopCompletionRequest request, CancellationToken cancellationToken = default)
+        public async Task StopCompletionStreamAsync(StopCompletionRequest request, CancellationToken cancellationToken = default)
         {
-            return await _httpClient.PostAsAsync<StopCompletionResponse>($"chat-messages/{Uri.EscapeDataString(request.TaskId)}/stop", request, cancellationToken);
+            await _httpClient.PostAsync($"chat-messages/{Uri.EscapeDataString(request.TaskId)}/stop", request, cancellationToken);
         }
     }
 }

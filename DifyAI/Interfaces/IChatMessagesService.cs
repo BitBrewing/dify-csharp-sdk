@@ -32,7 +32,6 @@ namespace DifyAI.Interfaces
         /// <remarks>仅支持流式模式</remarks>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        Task<StopCompletionResponse> StopCompletionStreamAsync(StopCompletionRequest request, CancellationToken cancellationToken = default);
+        Task StopCompletionStreamAsync(StopCompletionRequest request, CancellationToken cancellationToken = default);
     }
 }
