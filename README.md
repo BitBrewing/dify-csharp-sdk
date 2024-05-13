@@ -31,5 +31,13 @@ var rsp = await _difyAIService.ChatMessages.CreateCompletionAsync
 // 流式模式
 await foreach (var rsp in _difyAIService.ChatMessages.CreateCompletionStreamAsync(req))
 {
+    if (rsp is CreateCompletionStreamMessageResponse rspMessage)
+    {
+                    
+    }
+    else if (rsp is CreateCompletionStreamErrorResponse rspError)
+    {
+
+    }
 }
 ```
