@@ -1,5 +1,6 @@
 ﻿using DifyAI.ObjectModels;
 using Microsoft.Extensions.Options;
+using MimeMapping;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,7 +50,7 @@ namespace DifyAI
             }
         }
 
-        public static async Task<T> GetAsAsync<T>(this HttpClient httpClient, string requestUri, RequestBase requestModel, CancellationToken cancellationToken)
+        public static async Task<T> GetAsAsync<T>(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
@@ -60,7 +61,7 @@ namespace DifyAI
             return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
         }
 
-        public static async Task PostAsync(this HttpClient httpClient, string requestUri, RequestBase requestModel, CancellationToken cancellationToken)
+        public static async Task PostAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
@@ -71,7 +72,7 @@ namespace DifyAI
             await responseMessage.ValidateResponseAsync(cancellationToken);
         }
 
-        public static async Task<T> PostAsAsync<T>(this HttpClient httpClient, string requestUri, RequestBase requestModel, CancellationToken cancellationToken)
+        public static async Task<T> PostAsAsync<T>(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
@@ -84,7 +85,7 @@ namespace DifyAI
             return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
         }
 
-        public static async Task<Stream> PostAsStreamAsync(this HttpClient httpClient, string requestUri, RequestBase requestModel, CancellationToken cancellationToken)
+        public static async Task<Stream> PostAsStreamAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
@@ -99,11 +100,21 @@ namespace DifyAI
             return await responseMessage.Content.ReadAsStreamAsync(cancellationToken);
         }
 
-        public static async Task<T> UploadAsAsync<T>(this HttpClient httpClient, string requestUri, MultipartFormDataContent formDataContent, RequestBase requestModel, CancellationToken cancellationToken)
+        public static async Task<T> UploadAsAsync<T>(this HttpClient httpClient, string requestUri, IUploadRequest requestModel, CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
-            using var responseMessage = await httpClient.PostAsync(requestUri, formDataContent, cancellationToken);
+            using var formData = new MultipartFormDataContent();
+            using var fileStream = File.OpenRead(requestModel.File);
+            using var streamContent = new StreamContent(fileStream);
+
+            using var fileContent = new StreamContent(fileStream);
+            var mimeType = MimeUtility.GetMimeMapping(requestModel.File);
+            fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);
+
+            requestModel.PrepareContent(formData, fileContent);
+
+            using var responseMessage = await httpClient.PostAsync(requestUri, formData, cancellationToken);
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
 

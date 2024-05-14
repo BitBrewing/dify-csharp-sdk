@@ -7,5 +7,7 @@ namespace DifyAI.Interfaces
     public interface IDifyAIService
     {
         IChatMessagesService ChatMessages { get; }
+        IMessagesServices Messages { get; }
+        IFilesService Files { get; }
     }
 }
