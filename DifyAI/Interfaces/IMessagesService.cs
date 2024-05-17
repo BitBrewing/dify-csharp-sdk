@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.Interfaces
 {
-    public interface IMessagesServices
+    public interface IMessagesService
     {
         /// <summary>
         /// 消息反馈（点赞）

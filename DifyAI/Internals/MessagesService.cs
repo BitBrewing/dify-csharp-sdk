@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.Internals
 {
-    partial class DifyAIService : IMessagesServices
+    partial class DifyAIService : IMessagesService
     {
         public async Task FeedbacksAsync(FeedbacksRequest request, CancellationToken cancellationToken = default)
         {
