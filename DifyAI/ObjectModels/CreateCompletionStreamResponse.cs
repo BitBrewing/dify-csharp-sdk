@@ -17,6 +17,11 @@ namespace DifyAI.ObjectModels
         public const string Event_Message = "message";
 
         /// <summary>
+        /// 文件事件，表示有新文件需要展示
+        /// </summary>
+        public const string Event_MessageFile = "message_file";
+
+        /// <summary>
         /// 消息结束事件，收到此事件则代表流式返回结束。
         /// </summary>
         public const string Event_MessageEnd = "message_end";

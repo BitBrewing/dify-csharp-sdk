@@ -24,7 +24,7 @@ namespace DifyAI.ObjectModels
         /// 详细内容
         /// </summary>
         [JsonPropertyName("data")]
-        public object Data { get; set; }
+        public NodeStartedData Data { get; set; }
     }
 }
 

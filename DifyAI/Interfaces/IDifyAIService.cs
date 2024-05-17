@@ -9,5 +9,6 @@ namespace DifyAI.Interfaces
         IChatMessagesService ChatMessages { get; }
         IMessagesService Messages { get; }
         IFilesService Files { get; }
+        IWorkflowsService Workflows { get; }
     }
 }

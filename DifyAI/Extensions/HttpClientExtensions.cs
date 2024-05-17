@@ -24,6 +24,7 @@ namespace DifyAI
         {
             WriteIndented = false,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            NumberHandling = JsonNumberHandling.AllowReadingFromString, // 有些数字型的dify返回为字符串
         };
 
         public static void AddAuthorization(this HttpClient httpClient, string apiKey)

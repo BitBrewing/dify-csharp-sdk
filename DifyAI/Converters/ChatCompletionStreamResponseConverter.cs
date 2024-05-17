@@ -12,6 +12,7 @@ namespace DifyAI.Converters
         private static readonly Dictionary<string, Type> _derivedTypes = new()
         {
             [CreateCompletionStreamResponse.Event_Message] = typeof(CreateCompletionStreamMessageResponse),
+            [CreateCompletionStreamResponse.Event_MessageFile] = typeof(CreateCompletionStreamMessageFileResponse),
             [CreateCompletionStreamResponse.Event_MessageEnd] = typeof(CreateCompletionStreamMessageEndResponse),
             [CreateCompletionStreamResponse.Event_WorkflowStarted] = typeof(CreateCompletionStreamWorkflowStartedResponse),
             [CreateCompletionStreamResponse.Event_WorkflowFinished] = typeof(CreateCompletionStreamWorkflowFinishedResponse),

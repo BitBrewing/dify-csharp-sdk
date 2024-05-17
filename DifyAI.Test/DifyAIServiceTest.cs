@@ -53,6 +53,10 @@ namespace DifyAI.Test
             await foreach (var rsp in _difyAIService.ChatMessages.CreateCompletionStreamAsync(req))
             {
                 Assert.NotNull(rsp.Event);
+                if (rsp is CreateCompletionStreamNodeFinishedResponse r)
+                {
+                    
+                }
             }
         }
 

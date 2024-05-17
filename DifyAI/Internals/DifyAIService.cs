@@ -21,5 +21,6 @@ namespace DifyAI.Internals
         public IChatMessagesService ChatMessages => this;
         public IMessagesService Messages => this;
         public IFilesService Files => this;
+        public IWorkflowsService Workflows => this;
     }
 }
