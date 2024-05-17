@@ -1,4 +1,5 @@
 ﻿using DifyAI.Interfaces;
+using DifyAI.ObjectModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,17 @@ namespace DifyAI.Internals
 {
     partial class DifyAIService: IWorkflowsService
     {
-        public async Task RunAsync(CancellationToken cancellationToken = default)
+        public async Task RunCompletionAsync(CreateWorkflowCompletionRequest reqeust, CancellationToken cancellationToken = default)
+        {
+
+        }
+
+        public async Task RunCompletionStreamAsync(CreateWorkflowCompletionRequest reqeust, CancellationToken cancellationToken = default)
+        {
+
+        }
+
+        public async Task StopAsync()
         {
 
         }
