@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -80,13 +81,13 @@ namespace DifyAI
             var json = JsonSerializer.Serialize(requestModel, requestModel.GetType(), _defaultSerializerOptions);
             using var conetnt = new StringContent(json, Encoding.UTF8, JsonContentType);
             using var responseMessage = await httpClient.PostAsync(requestUri, conetnt, cancellationToken);
-            
+
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
             return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
         }
-
-        public static async Task<Stream> PostAsStreamAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
+     
+        public static async IAsyncEnumerable<T> PostChunkAsAsync<T>(this HttpClient httpClient, string requestUri, IRequest requestModel, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
@@ -94,11 +95,46 @@ namespace DifyAI
             using var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
 
             requestMessage.Content = content;
-            var responseMessage = await httpClient.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+            using var responseMessage = await httpClient.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
-            return await responseMessage.Content.ReadAsStreamAsync(cancellationToken);
+            await using var stream =  await responseMessage.Content.ReadAsStreamAsync(cancellationToken);
+
+            using var reader = new StreamReader(stream);
+
+            while (!reader.EndOfStream)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                var line = await reader.ReadLineAsync();
+                // Skip empty lines
+                if (string.IsNullOrEmpty(line))
+                {
+                    continue;
+                }
+
+                line = line.RemoveIfStartWith("data: ");
+
+                T block;
+                try
+                {
+                    // When the response is good, each line is a serializable CompletionCreateRequest
+                    block = JsonSerializer.Deserialize<T>(line, _defaultSerializerOptions);
+                }
+                catch (Exception)
+                {
+                    // When the API returns an error, it does not come back as a block, it returns a single character of text ("{").
+                    // In this instance, read through the rest of the response, which should be a complete object to parse.
+                    line += await reader.ReadToEndAsync();
+                    block = JsonSerializer.Deserialize<T>(line, _defaultSerializerOptions);
+                }
+
+                if (null != block)
+                {
+                    yield return block;
+                }
+            }
         }
 
         public static async Task<T> UploadAsAsync<T>(this HttpClient httpClient, string requestUri, IUploadRequest requestModel, CancellationToken cancellationToken)
