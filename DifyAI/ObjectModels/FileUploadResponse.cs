@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class UploadResponse
+    public class FileUploadResponse
     {
         /// <summary>
         /// ID

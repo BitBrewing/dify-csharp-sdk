@@ -1,6 +1,6 @@
 ﻿using DifyAI;
 using DifyAI.Interfaces;
-using DifyAI.Internals;
+using DifyAI.Services;
 using DifyAI.Options;
 using Microsoft.Extensions.Options;
 using System;

@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    [JsonConverter(typeof(ChatCompletionStreamResponseConverter))]
-    public abstract class CreateCompletionStreamResponse
+    [JsonConverter(typeof(CompletionStreamResponseConverter))]
+    public abstract class CompletionStreamResponse
     {
         /// <summary>
         /// LLM 返回文本块事件，即：完整的文本以分块的方式输出。

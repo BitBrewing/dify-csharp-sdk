@@ -6,22 +6,22 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DifyAI.Internals
+namespace DifyAI.Services
 {
     partial class DifyAIService : IChatMessagesService
     {
-        public async Task<CreateCompletionResponse> CreateCompletionAsync(CreateCompletionRequest request, CancellationToken cancellationToken = default)
+        public async Task<ChatCompletionResponse> CompletionAsync(ChatCompletionRequest request, CancellationToken cancellationToken = default)
         {
             request.ResponseMode = "blocking";
 
-            return await _httpClient.PostAsAsync<CreateCompletionResponse>("chat-messages", request, cancellationToken);
+            return await _httpClient.PostAsAsync<ChatCompletionResponse>("chat-messages", request, cancellationToken);
         }
 
-        public async IAsyncEnumerable<CreateCompletionStreamResponse> CreateCompletionStreamAsync(CreateCompletionRequest request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<CompletionStreamResponse> CompletionStreamAsync(ChatCompletionRequest request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             request.ResponseMode = "streaming";
 
-            await foreach (var chunk in _httpClient.PostChunkAsAsync<CreateCompletionStreamResponse>("chat-messages", request, cancellationToken))
+            await foreach (var chunk in _httpClient.PostChunkAsAsync<CompletionStreamResponse>("chat-messages", request, cancellationToken))
             {
                 yield return chunk;
             }

@@ -7,7 +7,7 @@ namespace DifySdk.Dtos
     /// <summary>
     /// 流式输出过程中出现的异常会以 stream event 形式输出，收到异常事件后即结束。
     /// </summary>
-	public class CreateCompletionStreamErrorResponse : CreateCompletionStreamResponse
+	public class CompletionStreamErrorResponse : CompletionStreamResponse
     {
         /// <summary>
         /// 任务 ID，用于请求跟踪和下方的停止响应接口

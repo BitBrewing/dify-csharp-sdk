@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class UploadRequest: RequestBase, IUploadRequest
+    public class FileUploadRequest : RequestBase, IUploadRequest
     {
         /// <summary>
         /// 要上传的文件

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class ChatRetrieverResource
+    public class CompletionRetrieverResource
     {
         [JsonPropertyName("position")]
         public int Position { get; set; }

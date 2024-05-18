@@ -16,7 +16,7 @@ namespace DifyAI.Interfaces
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task FeedbacksAsync(FeedbacksRequest request, CancellationToken cancellationToken = default);
+        Task FeedbacksAsync(MessageFeedbacksRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取下一轮建议问题列表
@@ -24,6 +24,6 @@ namespace DifyAI.Interfaces
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<SuggestedResponse> SuggestedAsync(SuggestedRequest request, CancellationToken cancellationToken = default);
+        Task<MessageSuggestedResponse> SuggestedAsync(MessageSuggestedRequest request, CancellationToken cancellationToken = default);
     }
 }

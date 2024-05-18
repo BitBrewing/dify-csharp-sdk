@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DifyAI.Internals
+namespace DifyAI.Services
 {
     partial class DifyAIService : IWorkflowsService
     {
@@ -29,9 +29,9 @@ namespace DifyAI.Internals
             }
         }
 
-        public async Task StopAsync()
+        public async Task StopAsync(StopCompletionRequest request, CancellationToken cancellationToken = default)
         {
-
+            await _httpClient.PostAsync($"workflows/{Uri.EscapeDataString(request.TaskId)}/stop", request, cancellationToken);
         }
     }
 }

@@ -18,24 +18,24 @@ services
 private readonly IDifyAIService _difyAIService;
 
 // 发送对话消息
-var req = new CreateCompletionRequest
+var req = new CompletionRequest
 {
     Query = "xxx",
     User = "xxx",
 };
 
 // 阻塞模式
-var rsp = await _difyAIService.ChatMessages.CreateCompletionAsync
+var rsp = await _difyAIService.ChatMessages.CompletionAsync
 (req);
 
 // 流式模式
-await foreach (var rsp in _difyAIService.ChatMessages.CreateCompletionStreamAsync(req))
+await foreach (var rsp in _difyAIService.ChatMessages.CompletionStreamAsync(req))
 {
-    if (rsp is CreateCompletionStreamMessageResponse rspMessage)
+    if (rsp is CompletionStreamMessageResponse rspMessage)
     {
                     
     }
-    else if (rsp is CreateCompletionStreamErrorResponse rspError)
+    else if (rsp is CompletionStreamErrorResponse rspError)
     {
 
     }

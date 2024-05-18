@@ -6,7 +6,7 @@ namespace DifyAI.ObjectModels
     /// <summary>
     /// workflow 执行结束，成功失败同一事件中不同状态
     /// </summary>
-    public class CreateCompletionStreamWorkflowFinishedResponse : CreateCompletionStreamResponse
+    public class CompletionStreamWorkflowFinishedResponse : CompletionStreamResponse
     {
         /// <summary>
         /// 任务 ID，用于请求跟踪和下方的停止响应接口

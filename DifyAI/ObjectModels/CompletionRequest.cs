@@ -15,7 +15,7 @@ namespace DifyAI.ObjectModels
         /// </summary>
         [Required]
         [JsonPropertyName("inputs")]
-        public Dictionary<string, string> Inputs { get; set; } = [];
+        public Dictionary<string, string> Inputs { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// <list type="bullet">

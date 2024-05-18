@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class ChatMetadata
+    public class CompletionMetadata
     {
         /// <summary>
         /// 引用和归属分段列表
         /// </summary>
         [JsonPropertyName("retriever_resources")]
-        public IReadOnlyList<ChatRetrieverResource> RetrieverResources { get; set; }
+        public IReadOnlyList<CompletionRetrieverResource> RetrieverResources { get; set; }
 
         /// <summary>
         /// 模型用量信息
         /// </summary>
         [JsonPropertyName("usage")]
-        public ChatUsage Usage { get; set; }
+        public CompletionUsage Usage { get; set; }
     }
 }

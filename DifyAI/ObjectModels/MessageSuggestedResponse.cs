@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class SuggestedResponse
+    public class MessageSuggestedResponse
     {
         [JsonPropertyName("data")]
         public IReadOnlyList<string> Data { get; set; }

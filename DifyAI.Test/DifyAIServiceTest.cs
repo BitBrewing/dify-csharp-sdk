@@ -30,27 +30,27 @@ namespace DifyAI.Test
         }
 
         [Fact]
-        public async Task CreateCompletion()
+        public async Task Completion()
         {
-            var req = new CreateCompletionRequest
+            var req = new CompletionRequest
             {
                 Query = "你好",
                 //User = "user123",
             };
-            var rsp = await _difyAIService.ChatMessages.CreateCompletionAsync(req);
+            var rsp = await _difyAIService.ChatMessages.CompletionAsync(req);
             Assert.NotNull(rsp.MessageId);
         }
 
         [Fact]
-        public async Task CreateCompletionStream()
+        public async Task CompletionStream()
         {
-            var req = new CreateCompletionRequest
+            var req = new CompletionRequest
             {
                 Query = "你好",
                 User = "user123",
             };
 
-            await foreach (var rsp in _difyAIService.ChatMessages.CreateCompletionStreamAsync(req))
+            await foreach (var rsp in _difyAIService.ChatMessages.CompletionStreamAsync(req))
             {
                 Assert.NotNull(rsp.Event);
             }

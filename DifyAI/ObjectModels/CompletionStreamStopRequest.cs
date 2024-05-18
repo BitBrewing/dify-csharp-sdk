@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class CreateCompletionStreamStopRequest
+    public class CompletionStreamStopRequest
     {
 
     }

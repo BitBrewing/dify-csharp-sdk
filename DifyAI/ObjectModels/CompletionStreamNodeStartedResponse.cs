@@ -6,7 +6,7 @@ namespace DifyAI.ObjectModels
     /// <summary>
     /// node 开始执行
     /// </summary>
-    public class CreateCompletionStreamNodeStartedResponse : CreateCompletionStreamResponse
+    public class CompletionStreamNodeStartedResponse : CompletionStreamResponse
     {
         /// <summary>
         /// 任务 ID，用于请求跟踪和下方的停止响应接口

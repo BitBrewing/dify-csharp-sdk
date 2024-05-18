@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class SuggestedRequest: RequestBase
+    public class MessageSuggestedRequest : RequestBase
     {
         /// <summary>
         /// 消息 ID

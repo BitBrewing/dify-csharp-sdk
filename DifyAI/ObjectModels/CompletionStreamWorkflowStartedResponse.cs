@@ -6,7 +6,7 @@ namespace DifyAI.ObjectModels
     /// <summary>
     /// workflow 开始执行
     /// </summary>
-    public class CreateCompletionStreamWorkflowStartedResponse : CreateCompletionStreamResponse
+    public class CompletionStreamWorkflowStartedResponse : CompletionStreamResponse
     {
         /// <summary>
         /// 任务 ID，用于请求跟踪和下方的停止响应接口

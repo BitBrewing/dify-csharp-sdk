@@ -17,6 +17,6 @@ namespace DifyAI.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <remarks>上传文件（目前仅支持图片）并在发送消息时使用，可实现图文多模态理解。 支持 png, jpg, jpeg, webp, gif 格式。 上传的文件仅供当前终端用户使用。</remarks>
-        Task<UploadResponse> UploadAsync(UploadRequest request, CancellationToken cancellationToken = default);
+        Task<FileUploadResponse> UploadAsync(FileUploadRequest request, CancellationToken cancellationToken = default);
     }
 }

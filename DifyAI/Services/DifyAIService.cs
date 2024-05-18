@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using DifyAI.Interfaces;
 using DifyAI.ObjectModels;
 
-namespace DifyAI.Internals
+namespace DifyAI.Services
 {
     internal partial class DifyAIService : IDifyAIService
     {
@@ -22,5 +22,6 @@ namespace DifyAI.Internals
         public IMessagesService Messages => this;
         public IFilesService Files => this;
         public IWorkflowsService Workflows => this;
+        public ICompletionMessagesService CompletionMessages => this;
     }
 }

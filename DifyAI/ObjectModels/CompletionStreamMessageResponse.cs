@@ -1,12 +1,13 @@
-﻿using System;
+﻿using DifyAI.Converters;
+using System;
 using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
     /// <summary>
-    /// 消息结束事件，收到此事件则代表流式返回结束。
+    /// LLM 返回文本块事件，即：完整的文本以分块的方式输出。
     /// </summary>
-	public class CreateCompletionStreamMessageEndResponse : CreateCompletionStreamResponse
+	public class CompletionStreamMessageResponse: CompletionStreamResponse
     {
         /// <summary>
         /// 任务 ID，用于请求跟踪和下方的停止响应接口
@@ -27,10 +28,17 @@ namespace DifyAI.ObjectModels
         public string ConversationId { get; set; }
 
         /// <summary>
-        /// 元数据
+        /// 完整回复内容
         /// </summary>
-        [JsonPropertyName("metadata")]
-        public ChatMetadata Metadata { get; set; }
+        [JsonPropertyName("answer")]
+        public string Answer { get; set; }
+
+        /// <summary>
+        /// 消息创建时间戳，如：1705395332
+        /// </summary>
+        [JsonPropertyName("created_at")]
+        [JsonConverter(typeof(UnixTimestampConverter))]
+        public DateTimeOffset CreatedAt { get; set; }
     }
 }
 

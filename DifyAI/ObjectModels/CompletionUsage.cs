@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class ChatUsage
+    public class CompletionUsage
     {
         [JsonPropertyName("prompt_tokens")]
         public int PromptTokens { get; set; }

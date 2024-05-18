@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class CreateCompletionRequest: RequestBase
+    public class ChatCompletionRequest : RequestBase
     {
         /// <summary>
         /// 用户输入/提问内容。
@@ -20,7 +20,7 @@ namespace DifyAI.ObjectModels
         /// </summary>
         [Required]
         [JsonPropertyName("inputs")]
-        public Dictionary<string, string> Inputs { get; set; } = [];
+        public Dictionary<string, string> Inputs { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// <list type="bullet">
