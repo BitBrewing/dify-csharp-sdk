@@ -24,7 +24,7 @@ namespace DifyAI.Interfaces
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        IAsyncEnumerable<CompletionResponse> WorkflowStreamAsync(CompletionRequest request, CancellationToken cancellationToken = default);
+        IAsyncEnumerable<ChunkCompletionResponse> WorkflowStreamAsync(CompletionRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 停止响应

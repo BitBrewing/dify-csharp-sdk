@@ -19,11 +19,11 @@ namespace DifyAI.Services
             return await _httpClient.PostAsAsync<CompletionResponse>("workflows/run", request, cancellationToken);
         }
 
-        public async IAsyncEnumerable<CompletionResponse> WorkflowStreamAsync(CompletionRequest request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<ChunkCompletionResponse> WorkflowStreamAsync(CompletionRequest request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             request.ResponseMode = "streaming";
 
-            await foreach (var chunk in _httpClient.PostChunkAsAsync<CompletionResponse>("workflows/run", request, cancellationToken))
+            await foreach (var chunk in _httpClient.PostChunkAsAsync<ChunkCompletionResponse>("workflows/run", request, cancellationToken))
             {
                 yield return chunk;
             }
