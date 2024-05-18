@@ -4,9 +4,9 @@ using System.Text.Json.Serialization;
 namespace DifyAI.ObjectModels
 {
     /// <summary>
-    /// workflow 开始执行
+    /// node 执行结束，成功失败同一事件中不同状态
     /// </summary>
-    public class CompletionStreamWorkflowStartedResponse : CompletionStreamResponse
+    public class ChunkCompletionNodeFinishedResponse : ChunkCompletionResponse
     {
         /// <summary>
         /// 任务 ID，用于请求跟踪和下方的停止响应接口
@@ -24,7 +24,7 @@ namespace DifyAI.ObjectModels
         /// 详细内容
         /// </summary>
         [JsonPropertyName("data")]
-        public WorkflowStartedData Data { get; set; }
+        public CompletionNodeFinishedData Data { get; set; }
     }
 }
 

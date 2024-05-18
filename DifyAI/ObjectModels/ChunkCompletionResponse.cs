@@ -8,13 +8,18 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    [JsonConverter(typeof(CompletionStreamResponseConverter))]
-    public abstract class CompletionStreamResponse
+    [JsonConverter(typeof(ChunkCompletionResponseConverter))]
+    public abstract class ChunkCompletionResponse
     {
         /// <summary>
         /// LLM 返回文本块事件，即：完整的文本以分块的方式输出。
         /// </summary>
         public const string Event_Message = "message";
+
+        /// <summary>
+        /// 消息内容替换事件。 开启内容审查和审查输出内容时，若命中了审查条件，则会通过此事件替换消息内容为预设回复。
+        /// </summary>
+        public const string Event_MessageReplace = "message_replace";
 
         /// <summary>
         /// 文件事件，表示有新文件需要展示
@@ -50,6 +55,16 @@ namespace DifyAI.ObjectModels
         /// node 执行结束，成功失败同一事件中不同状态
         /// </summary>
         public const string Event_NodeFinished = "node_finished";
+
+        /// <summary>
+        /// Agent模式下返回文本块事件，即：在Agent模式下，文章的文本以分块的方式输出（仅Agent模式下使用）
+        /// </summary>
+        public const string Event_AgentMessage = "agent_message";
+
+        /// <summary>
+        /// Agent模式下有关Agent思考步骤的相关内容，涉及到工具调用（仅Agent模式下使用）
+        /// </summary>
+        public const string Event_AgentThought = "agent_thought";
 
         /// <summary>
         /// 事件名称

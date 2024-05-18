@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class NodeFinishedData
+    public class CompletionNodeFinishedData
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }
@@ -42,7 +42,7 @@ namespace DifyAI.ObjectModels
         public float ElapsedTime { get; set; }
 
         [JsonPropertyName("execution_metadata")]
-        public ExecutionMetadata ExecutionMetadata { get; set; }
+        public CompletionExecutionMetadata ExecutionMetadata { get; set; }
 
         [JsonPropertyName("created_at")]
         [JsonConverter(typeof(UnixTimestampConverter))]

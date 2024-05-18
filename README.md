@@ -29,13 +29,13 @@ var rsp = await _difyAIService.ChatMessages.CompletionAsync
 (req);
 
 // 流式模式
-await foreach (var rsp in _difyAIService.ChatMessages.CompletionStreamAsync(req))
+await foreach (var rsp in _difyAIService.ChatMessages.ChunkCompletionAsync(req))
 {
-    if (rsp is CompletionStreamMessageResponse rspMessage)
+    if (rsp is ChunkCompletionMessageResponse rspMessage)
     {
                     
     }
-    else if (rsp is CompletionStreamErrorResponse rspError)
+    else if (rsp is ChunkCompletionErrorResponse rspError)
     {
 
     }

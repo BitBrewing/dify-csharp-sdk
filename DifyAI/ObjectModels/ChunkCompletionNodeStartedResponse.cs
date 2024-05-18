@@ -6,7 +6,7 @@ namespace DifyAI.ObjectModels
     /// <summary>
     /// node 开始执行
     /// </summary>
-    public class CompletionStreamNodeStartedResponse : CompletionStreamResponse
+    public class ChunkCompletionNodeStartedResponse : ChunkCompletionResponse
     {
         /// <summary>
         /// 任务 ID，用于请求跟踪和下方的停止响应接口
@@ -24,7 +24,7 @@ namespace DifyAI.ObjectModels
         /// 详细内容
         /// </summary>
         [JsonPropertyName("data")]
-        public NodeStartedData Data { get; set; }
+        public CompletionNodeStartedData Data { get; set; }
     }
 }
 

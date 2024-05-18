@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class WorkflowStartedData
+    public class CompletionWorkflowStartedData
     {
         /// <summary>
         /// workflow 执行 ID

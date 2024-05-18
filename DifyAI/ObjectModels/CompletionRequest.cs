@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -13,7 +12,6 @@ namespace DifyAI.ObjectModels
         /// <summary>
         /// 允许传入 App 定义的各变量值。 inputs 参数包含了多组键值对（Key/Value pairs），每组的键对应一个特定变量，每组的值则是该变量的具体值。 默认 {}
         /// </summary>
-        [Required]
         [JsonPropertyName("inputs")]
         public Dictionary<string, string> Inputs { get; set; } = new Dictionary<string, string>();
 
@@ -23,14 +21,12 @@ namespace DifyAI.ObjectModels
         /// <item>blocking 阻塞模式，等待执行完毕后返回结果。（请求若流程较长可能会被中断）。 由于 Cloudflare 限制，请求会在 100 秒超时无返回后中断。</item>
         /// </list>
         /// </summary>
-        [Required]
         [JsonPropertyName("response_mode")]
         public string ResponseMode { get; internal set; }
 
         /// <summary>
         /// 用户标识，用于定义终端用户的身份，方便检索、统计。 由开发者定义规则，需保证用户标识在应用内唯一。
         /// </summary>
-        [Required]
         [JsonPropertyName("user")]
         public string User { get; set; }
 

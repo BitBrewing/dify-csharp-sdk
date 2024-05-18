@@ -6,7 +6,7 @@ namespace DifyAI.ObjectModels
     /// <summary>
     /// 消息结束事件，收到此事件则代表流式返回结束。
     /// </summary>
-	public class CompletionStreamMessageEndResponse : CompletionStreamResponse
+	public class ChunkCompletionMessageEndResponse : ChunkCompletionResponse
     {
         /// <summary>
         /// 任务 ID，用于请求跟踪和下方的停止响应接口

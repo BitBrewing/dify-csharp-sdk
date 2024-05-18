@@ -1,15 +1,11 @@
-﻿using DifyAI.Converters;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
-
+using DifyAI.Converters;
 namespace DifyAI.ObjectModels
 {
-    /// <summary>
-    /// LLM 返回文本块事件，即：完整的文本以分块的方式输出。
-    /// </summary>
-	public class CompletionStreamMessageResponse: CompletionStreamResponse
+	public class ChunkCompletionMessageReplaceResponse: ChunkCompletionResponse
     {
-        /// <summary>
+		/// <summary>
         /// 任务 ID，用于请求跟踪和下方的停止响应接口
         /// </summary>
         [JsonPropertyName("task_id")]
@@ -27,7 +23,7 @@ namespace DifyAI.ObjectModels
         [JsonPropertyName("conversation_id")]
         public string ConversationId { get; set; }
 
-        /// <summary>
+		/// <summary>
         /// 完整回复内容
         /// </summary>
         [JsonPropertyName("answer")]
@@ -39,6 +35,6 @@ namespace DifyAI.ObjectModels
         [JsonPropertyName("created_at")]
         [JsonConverter(typeof(UnixTimestampConverter))]
         public DateTimeOffset CreatedAt { get; set; }
-    }
+	}
 }
 

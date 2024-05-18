@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class ExecutionMetadata
+    public class CompletionExecutionMetadata
     {
         /// <summary>
         /// 总使用 tokens

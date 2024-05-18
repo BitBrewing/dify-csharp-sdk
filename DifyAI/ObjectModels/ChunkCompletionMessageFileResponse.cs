@@ -10,7 +10,7 @@ namespace DifyAI.ObjectModels
     /// <summary>
     /// 文件事件，表示有新文件需要展示
     /// </summary>
-    public class CompletionStreamMessageFileResponse: CompletionStreamResponse
+    public class ChunkCompletionMessageFileResponse: ChunkCompletionResponse
     {
         /// <summary>
         /// 文件唯一ID
