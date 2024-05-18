@@ -8,36 +8,63 @@ Install-Package DifyAI
 services
     .AddDifyAI(x =>
     {
-        x.BaseDomain = "xxx";
-        x.ApiKey = "xxx";
+        x.BaseDomain = "http://127.0.0.1/v1";
+        x.DefaultApiKey = "app-xxxxxxxxxxxxxxxx";
     });
 ```
 
 ## 使用
 ```csharp
 private readonly IDifyAIService _difyAIService;
+```
 
-// 发送对话消息
-var req = new CompletionRequest
-{
-    Query = "xxx",
-    User = "xxx",
-};
-
+### 聊天助手、Agent 应用消息
+```csharp
 // 阻塞模式
-var rsp = await _difyAIService.ChatMessages.CompletionAsync
+var rsp = await _difyAIService.ChatMessages.ChatAsync
 (req);
 
 // 流式模式
-await foreach (var rsp in _difyAIService.ChatMessages.ChunkCompletionAsync(req))
+await foreach (var rsp in _difyAIService.ChatMessages.StartChatAsync(req))
 {
-    if (rsp is ChunkCompletionMessageResponse rspMessage)
-    {
-                    
-    }
-    else if (rsp is ChunkCompletionErrorResponse rspError)
-    {
-
-    }
 }
+
+// 停止响应
+await _difyAIService.ChatMessages.StopChatAsync(req);
+```
+
+### 工作流应用消息
+```csharp
+// 阻塞模式
+var rsp = await _difyAIService.Workflows.WorkflowAsync
+(req);
+
+// 流式模式
+await foreach (var rsp in _difyAIService.Workflows.StartWorkflowAsyncAsync(req))
+{
+}
+
+// 停止响应
+await _difyAIService.Workflows.StopWorkflowAsync(req);
+```
+
+### 文本生成应用消息
+```csharp
+// 阻塞模式
+var rsp = await _difyAIService.CompletionMessages.CompletionAsync
+(req);
+
+// 流式模式
+await foreach (var rsp in _difyAIService.CompletionMessages.StartCompletionAsync(req))
+{
+}
+
+// 停止响应
+await _difyAIService.CompletionMessages.StopCompletionAsync(req);
+```
+
+### 文件
+```csharp
+// 上传文件
+var rsp = await _difyAIService.Files.UploadAsync(req);
 ```
