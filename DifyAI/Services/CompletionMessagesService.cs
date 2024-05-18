@@ -17,7 +17,7 @@ namespace DifyAI.Services
             return await _httpClient.PostAsAsync<ChatCompletionResponse>("completion-messages", request, cancellationToken);
         }
 
-        public async IAsyncEnumerable<ChunkCompletionResponse> StartCompletionAsync(ChatCompletionRequest request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<ChunkCompletionResponse> CompletionStreamAsync(ChatCompletionRequest request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             request.ResponseMode = "streaming";
 

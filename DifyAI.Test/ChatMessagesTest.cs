@@ -33,7 +33,7 @@ namespace DifyAI.Test
                 User = "user123",
             };
 
-            await foreach (var rsp in _difyAIService.ChatMessages.StartChatAsync(req))
+            await foreach (var rsp in _difyAIService.ChatMessages.ChatStreamAsync(req))
             {
                 Assert.NotNull(rsp.Event);
             }

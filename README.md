@@ -25,7 +25,7 @@ var rsp = await _difyAIService.ChatMessages.ChatAsync
 (req);
 
 // 流式模式
-await foreach (var rsp in _difyAIService.ChatMessages.StartChatAsync(req))
+await foreach (var rsp in _difyAIService.ChatMessages.ChatStreamAsync(req))
 {
 }
 
@@ -40,7 +40,7 @@ var rsp = await _difyAIService.Workflows.WorkflowAsync
 (req);
 
 // 流式模式
-await foreach (var rsp in _difyAIService.Workflows.StartWorkflowAsyncAsync(req))
+await foreach (var rsp in _difyAIService.Workflows.WorkflowStreamAsyncAsync(req))
 {
 }
 
@@ -55,7 +55,7 @@ var rsp = await _difyAIService.CompletionMessages.CompletionAsync
 (req);
 
 // 流式模式
-await foreach (var rsp in _difyAIService.CompletionMessages.StartCompletionAsync(req))
+await foreach (var rsp in _difyAIService.CompletionMessages.CompletionStreamAsync(req))
 {
 }
 

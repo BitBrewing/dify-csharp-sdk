@@ -33,7 +33,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     }
 
                     httpClient.BaseAddress = host.Uri;
-                    httpClient.AddAuthorization(options.ApiKey);
+                    httpClient.AddAuthorization(options.DefaultApiKey);
                 });
         }
     }

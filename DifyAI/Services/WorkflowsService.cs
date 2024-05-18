@@ -19,7 +19,7 @@ namespace DifyAI.Services
             return await _httpClient.PostAsAsync<CompletionResponse>("workflows/run", request, cancellationToken);
         }
 
-        public async IAsyncEnumerable<CompletionResponse> StartWorkflowAsync(CompletionRequest request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<CompletionResponse> WorkflowStreamAsync(CompletionRequest request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             request.ResponseMode = "streaming";
 
