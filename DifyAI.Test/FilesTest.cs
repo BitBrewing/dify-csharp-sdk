@@ -9,13 +9,12 @@ namespace DifyAI.Test
         {
             var req = new FileUploadRequest
             {
-                File = @"C:\Users\obsgo\Pictures\36703881.png",
+                File = "/Users/liuning/Pictures/08101559830054.jpeg",
                 User = "user123",
             };
 
             var rsp = await _difyAIService.Files.UploadAsync(req);
-            Assert.NotEmpty(rsp.Name);
+            Assert.NotEqual(Guid.Empty ,rsp.Id);
         }
 	}
 }
-

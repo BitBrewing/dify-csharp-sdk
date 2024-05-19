@@ -63,26 +63,27 @@ namespace DifyAI
             return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
         }
 
-        public static async Task PostAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
+        private static async Task<HttpResponseMessage> PostCoreAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
             var json = JsonSerializer.Serialize(requestModel, requestModel.GetType(), _defaultSerializerOptions);
             using var conetnt = new StringContent(json, Encoding.UTF8, JsonContentType);
-            using var responseMessage = await httpClient.PostAsync(requestUri, conetnt, cancellationToken);
+            var responseMessage = await httpClient.PostAsync(requestUri, conetnt, cancellationToken);
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
+
+            return responseMessage;
+        }
+
+        public static async Task PostAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
+        {
+            using var responseMessage = await httpClient.PostCoreAsync(requestUri, requestModel, cancellationToken);
         }
 
         public static async Task<T> PostAsAsync<T>(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
         {
-            httpClient.AddAuthorization(requestModel.ApiKey);
-
-            var json = JsonSerializer.Serialize(requestModel, requestModel.GetType(), _defaultSerializerOptions);
-            using var conetnt = new StringContent(json, Encoding.UTF8, JsonContentType);
-            using var responseMessage = await httpClient.PostAsync(requestUri, conetnt, cancellationToken);
-
-            await responseMessage.ValidateResponseAsync(cancellationToken);
+            using var responseMessage = await httpClient.PostCoreAsync(requestUri, requestModel, cancellationToken);
 
             return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
         }
@@ -141,7 +142,7 @@ namespace DifyAI
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
-            using var formData = new MultipartFormDataContent();
+            using var multipartContent = new MultipartFormDataContent();
             using var fileStream = File.OpenRead(requestModel.File);
             using var streamContent = new StreamContent(fileStream);
 
@@ -149,9 +150,11 @@ namespace DifyAI
             var mimeType = MimeUtility.GetMimeMapping(requestModel.File);
             fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);
 
-            requestModel.PrepareContent(formData, fileContent);
+            multipartContent.Add(fileContent, "file", Path.GetFileName(requestModel.File));
 
-            using var responseMessage = await httpClient.PostAsync(requestUri, formData, cancellationToken);
+            await multipartContent.AddObjectFields(requestModel);
+
+            using var responseMessage = await httpClient.PostAsync(requestUri, multipartContent, cancellationToken);
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
@@ -161,6 +164,29 @@ namespace DifyAI
         private static bool IsJsonContentType(HttpResponseMessage response)
         {
             return response.Content.Headers.ContentType?.MediaType?.Equals(JsonContentType, StringComparison.OrdinalIgnoreCase) ?? false;
+        }
+
+        private static async Task AddObjectFields(this MultipartFormDataContent multipartContent, object obj)
+        {
+            // 将对象序列化为 JSON 流
+            await using var stream = new MemoryStream();
+
+            await JsonSerializer.SerializeAsync(stream, obj, _defaultSerializerOptions);
+            stream.Position = 0;
+
+            // 解析 JSON 流为 JsonDocument
+            using var doc = await JsonDocument.ParseAsync(stream);
+
+            // 迭代 JSON 对象的字段并添加到 MultipartFormDataContent
+            foreach (var property in doc.RootElement.EnumerateObject())
+            {
+                string fieldName = property.Name;
+                string fieldValue = property.Value.GetRawText();
+
+                // 创建 StringContent 并添加到 MultipartFormDataContent
+                var content = new StringContent(fieldValue);
+                multipartContent.Add(content, fieldName);
+            }
         }
 
         private class Error
