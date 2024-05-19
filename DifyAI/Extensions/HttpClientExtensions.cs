@@ -138,6 +138,11 @@ namespace DifyAI
             }
         }
 
+        public static async Task<HttpResponseMessage> DownloadAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
+        {
+            return await httpClient.PostCoreAsync(requestUri, requestModel, cancellationToken);
+        }
+
         public static async Task<T> UploadAsAsync<T>(this HttpClient httpClient, string requestUri, IUploadRequest requestModel, CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);

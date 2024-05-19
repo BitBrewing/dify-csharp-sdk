@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-	public class TextToAudioRequest
+	public class TextToAudioRequest: RequestBase
 	{
         /// <summary>
         /// 语音生成内容。

@@ -8,10 +8,13 @@ namespace DifyAI.Services
 {
 	partial class DifyAIService: IAudiosService
     {
-        // public async Task TextToAudioAsync(TextToAudioRequest request, CancellationToken cancellationToken = default)
-		// {
+        public async Task TextToAudioAsync(TextToAudioRequest request, CancellationToken cancellationToken = default)
+        {
+            using var responseMessage = await _httpClient.DownloadAsync("text-to-audio", request, cancellationToken);
+            var bytes = await responseMessage.Content.ReadAsByteArrayAsync(cancellationToken);
 
-		// }
+            await System.IO.File.WriteAllBytesAsync("/Users/liuning/Downloads/test.mp3", bytes, cancellationToken);
+        }
 
         public async Task<AudioToTextResponse> AudioToTextAsync(AudioToTextRequest request, CancellationToken cancellationToken = default)
         {

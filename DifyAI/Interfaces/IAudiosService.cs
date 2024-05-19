@@ -6,6 +6,8 @@ namespace DifyAI.Interfaces
 {
     public interface IAudiosService
 	{
+        Task TextToAudioAsync(TextToAudioRequest request, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// 语音转文字
         /// </summary>
