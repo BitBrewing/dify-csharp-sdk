@@ -30,5 +30,10 @@ namespace DifyAI.Interfaces
         /// 文本生成应用消息
         /// </summary>
         ICompletionMessagesService CompletionMessages { get; }
+
+        /// <summary>
+        /// 语音
+        /// </summary>
+        IAudiosService Audios { get; }
     }
 }
