@@ -68,3 +68,12 @@ await _difyAIService.CompletionMessages.StopCompletionAsync(req);
 // 上传文件
 var rsp = await _difyAIService.Files.UploadAsync(req);
 ```
+
+### 音频
+```csharp
+// 语音转文字
+var rsp = await _difyAIService.Audios.AudioToTextAsync(req);
+
+// 文字转语音
+var rsp = await _difyAIService.Audios.TextToAudioAsync(req);
+```
