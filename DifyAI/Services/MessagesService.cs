@@ -20,5 +20,10 @@ namespace DifyAI.Services
         {
             return await _httpClient.GetAsAsync<MessageSuggestedResponse>($"messages/{Uri.EscapeDataString(request.MessageId)}/suggested", request, cancellationToken);
         }
+
+        public async Task<MessageHistoryResponse> HistoryAsync(MessageHistoryRequest request, CancellationToken cancellationToken = default)
+        {
+            return await _httpClient.GetAsAsync<MessageHistoryResponse>($"messages", request, cancellationToken);
+        }
     }
 }

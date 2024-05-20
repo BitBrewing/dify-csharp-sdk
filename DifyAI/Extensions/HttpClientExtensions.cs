@@ -4,6 +4,7 @@ using MimeMapping;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -56,7 +57,7 @@ namespace DifyAI
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
-            using var responseMessage = await httpClient.GetAsync(requestUri, cancellationToken);
+            using var responseMessage = await httpClient.GetAsync(AddQueryString(requestUri, requestModel), cancellationToken);
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
@@ -197,23 +198,48 @@ namespace DifyAI
             return response.Content.Headers.ContentType?.MediaType?.Equals(JsonContentType, StringComparison.OrdinalIgnoreCase) ?? false;
         }
 
-        private static void AddObjectFields(this MultipartFormDataContent multipartContent, object obj)
+        private static IEnumerable<KeyValuePair<string, string>> GetObjectFields(object obj)
         {
-            // 将对象序列化为 JSON 流
+            // 将对象序列化为 JSON
             var json = JsonSerializer.Serialize(obj, obj.GetType(), _defaultSerializerOptions);
 
-            // 解析 JSON 流为 JsonDocument
+            // 解析 JSON 为 JsonDocument
             using var doc = JsonDocument.Parse(json);
 
-            // 迭代 JSON 对象的字段并添加到 MultipartFormDataContent
-            foreach (var property in doc.RootElement.EnumerateObject())
-            {
-                string fieldName = property.Name;
-                string fieldValue = property.Value.GetRawText();
+            return doc.RootElement.EnumerateObject().ToDictionary(x => x.Name, x => x.Value.GetRawText());
+        }
 
+        private static string AddQueryString(string url, object obj)
+        {
+            var queryString = new StringBuilder();
+            foreach (var (key, value) in GetObjectFields(obj))
+            {
+                queryString.Append($"&{key}={Uri.EscapeDataString(value)}");
+            }
+
+            if (queryString.Length > 0)
+            {
+                if (url.Contains('?'))
+                {
+                    url += queryString;
+                }
+                else
+                {
+                    url += "?" + queryString.Remove(0, 1);
+                }
+            }
+
+            return url;
+        }
+
+        private static void AddObjectFields(this MultipartFormDataContent multipartContent, object obj)
+        {
+            // 迭代 对象的字段并添加到 MultipartFormDataContent
+            foreach (var (key, value) in GetObjectFields(obj))
+            {
                 // 创建 StringContent 并添加到 MultipartFormDataContent
-                var content = new StringContent(fieldValue);
-                multipartContent.Add(content, fieldName);
+                var content = new StringContent(value);
+                multipartContent.Add(content, key);
             }
         }
 
