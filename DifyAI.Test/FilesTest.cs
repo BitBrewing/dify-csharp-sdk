@@ -9,7 +9,7 @@ namespace DifyAI.Test
         {
             var req = new FileUploadRequest
             {
-                File = "/Users/liuning/Pictures/08101559830054.jpeg",
+                File = Path.Join(AppDomain.CurrentDomain.BaseDirectory, "Assets/Image.png"),
                 User = "user123",
             };
 

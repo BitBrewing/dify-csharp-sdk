@@ -21,7 +21,7 @@ namespace DifyAI.ObjectModels
         /// 是否启用流式输出true、false。
         /// </summary>
         [JsonPropertyName("streaming")]
-        public bool Streaming { get; set; }
+        public bool Streaming { get; internal set; }
     }
 }
 

@@ -67,9 +67,8 @@ namespace DifyAI
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
 
-            var json = JsonSerializer.Serialize(requestModel, requestModel.GetType(), _defaultSerializerOptions);
-            using var conetnt = new StringContent(json, Encoding.UTF8, JsonContentType);
-            var responseMessage = await httpClient.PostAsync(requestUri, conetnt, cancellationToken);
+            using var content = JsonContent.Create(requestModel, requestModel.GetType(), null, _defaultSerializerOptions);
+            var responseMessage = await httpClient.PostAsync(requestUri, content, cancellationToken);
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
@@ -87,7 +86,7 @@ namespace DifyAI
 
             return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
         }
-     
+
         public static async IAsyncEnumerable<T> PostChunkAsAsync<T>(this HttpClient httpClient, string requestUri, IRequest requestModel, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             httpClient.AddAuthorization(requestModel.ApiKey);
@@ -100,7 +99,7 @@ namespace DifyAI
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
-            await using var stream =  await responseMessage.Content.ReadAsStreamAsync(cancellationToken);
+            await using var stream = await responseMessage.Content.ReadAsStreamAsync(cancellationToken);
 
             using var reader = new StreamReader(stream);
 
@@ -138,9 +137,36 @@ namespace DifyAI
             }
         }
 
+        //public static async Task DownloadChunkAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
+        //{
+        //    httpClient.AddAuthorization(requestModel.ApiKey);
+
+        //    using var content = JsonContent.Create(requestModel, requestModel.GetType(), null, _defaultSerializerOptions);
+        //    using var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+
+        //    requestMessage.Content = content;
+        //    using var responseMessage = await httpClient.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+
+        //    await responseMessage.ValidateResponseAsync(cancellationToken);
+        //}
+
         public static async Task<HttpResponseMessage> DownloadAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
         {
-            return await httpClient.PostCoreAsync(requestUri, requestModel, cancellationToken);
+            httpClient.AddAuthorization(requestModel.ApiKey);
+
+            using var content = JsonContent.Create(requestModel, requestModel.GetType(), null, _defaultSerializerOptions);
+
+            using var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+            requestMessage.Content = content;
+
+            // 无法指定返回的格式
+            //requestMessage.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("audio/wav"));
+
+            var responseMessage = await httpClient.SendAsync(requestMessage, cancellationToken);
+
+            await responseMessage.ValidateResponseAsync(cancellationToken);
+
+            return responseMessage;
         }
 
         public static async Task<T> UploadAsAsync<T>(this HttpClient httpClient, string requestUri, IUploadRequest requestModel, CancellationToken cancellationToken)
@@ -157,7 +183,7 @@ namespace DifyAI
 
             multipartContent.Add(fileContent, "file", Path.GetFileName(requestModel.File));
 
-            await multipartContent.AddObjectFields(requestModel);
+            multipartContent.AddObjectFields(requestModel);
 
             using var responseMessage = await httpClient.PostAsync(requestUri, multipartContent, cancellationToken);
 
@@ -171,16 +197,13 @@ namespace DifyAI
             return response.Content.Headers.ContentType?.MediaType?.Equals(JsonContentType, StringComparison.OrdinalIgnoreCase) ?? false;
         }
 
-        private static async Task AddObjectFields(this MultipartFormDataContent multipartContent, object obj)
+        private static void AddObjectFields(this MultipartFormDataContent multipartContent, object obj)
         {
             // 将对象序列化为 JSON 流
-            await using var stream = new MemoryStream();
-
-            await JsonSerializer.SerializeAsync(stream, obj, _defaultSerializerOptions);
-            stream.Position = 0;
+            var json = JsonSerializer.Serialize(obj, obj.GetType(), _defaultSerializerOptions);
 
             // 解析 JSON 流为 JsonDocument
-            using var doc = await JsonDocument.ParseAsync(stream);
+            using var doc = JsonDocument.Parse(json);
 
             // 迭代 JSON 对象的字段并添加到 MultipartFormDataContent
             foreach (var property in doc.RootElement.EnumerateObject())

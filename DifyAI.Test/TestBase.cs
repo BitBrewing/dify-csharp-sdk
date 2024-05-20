@@ -15,7 +15,7 @@ namespace DifyAI.Test
                 .AddDifyAIService(x =>
                 {
                     x.BaseDomain = "http://10.205.4.101:15000/v1";
-                    x.DefaultApiKey = "app-BcUpirbWkIyTgQUIrP8zOeuf";
+                    x.DefaultApiKey = "app-vKpvZXTPehLr955rijCvyLAq";
                 });
 
             var app = services.BuildServiceProvider();
