@@ -21,8 +21,7 @@ private readonly IDifyAIService _difyAIService;
 ### 聊天助手、Agent 应用消息
 ```csharp
 // 阻塞模式
-var rsp = await _difyAIService.ChatMessages.ChatAsync
-(req);
+var rsp = await _difyAIService.ChatMessages.ChatAsync(req);
 
 // 流式模式
 await foreach (var rsp in _difyAIService.ChatMessages.ChatStreamAsync(req))
@@ -36,11 +35,10 @@ await _difyAIService.ChatMessages.StopChatAsync(req);
 ### 工作流应用消息
 ```csharp
 // 阻塞模式
-var rsp = await _difyAIService.Workflows.WorkflowAsync
-(req);
+var rsp = await _difyAIService.Workflows.WorkflowAsync(req);
 
 // 流式模式
-await foreach (var rsp in _difyAIService.Workflows.WorkflowStreamAsyncAsync(req))
+await foreach (var rsp in _difyAIService.Workflows.WorkflowStreamAsync(req))
 {
 }
 
@@ -51,8 +49,7 @@ await _difyAIService.Workflows.StopWorkflowAsync(req);
 ### 文本生成应用消息
 ```csharp
 // 阻塞模式
-var rsp = await _difyAIService.CompletionMessages.CompletionAsync
-(req);
+var rsp = await _difyAIService.CompletionMessages.CompletionAsync(req);
 
 // 流式模式
 await foreach (var rsp in _difyAIService.CompletionMessages.CompletionStreamAsync(req))
