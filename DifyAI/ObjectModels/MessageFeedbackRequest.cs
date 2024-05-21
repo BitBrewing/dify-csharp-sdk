@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class MessageFeedbacksRequest : RequestBase
+    public class MessageFeedbackRequest : RequestBase
     {
         /// <summary>
         /// 消息 ID

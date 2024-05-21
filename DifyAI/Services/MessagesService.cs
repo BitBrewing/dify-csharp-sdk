@@ -11,7 +11,7 @@ namespace DifyAI.Services
 {
     partial class DifyAIService : IMessagesService
     {
-        public async Task FeedbacksAsync(MessageFeedbacksRequest request, CancellationToken cancellationToken = default)
+        public async Task FeedbackAsync(MessageFeedbackRequest request, CancellationToken cancellationToken = default)
         {
             await _httpClient.PostAsync($"messages/{Uri.EscapeDataString(request.MessageId)}/feedbacks", request, cancellationToken);
         }

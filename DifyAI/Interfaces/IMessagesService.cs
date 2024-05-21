@@ -16,7 +16,7 @@ namespace DifyAI.Interfaces
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task FeedbacksAsync(MessageFeedbacksRequest request, CancellationToken cancellationToken = default);
+        Task FeedbackAsync(MessageFeedbackRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取会话历史消息

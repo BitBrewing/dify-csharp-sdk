@@ -65,14 +65,37 @@ await _difyAIService.CompletionMessages.StopCompletionAsync(req);
 ### 文件
 ```csharp
 // 上传文件
-var rsp = await _difyAIService.Files.UploadAsync(req);
+await _difyAIService.Files.UploadAsync(req);
 ```
 
 ### 音频
 ```csharp
 // 语音转文字
-var rsp = await _difyAIService.Audios.AudioToTextAsync(req);
+await _difyAIService.Audios.AudioToTextAsync(req);
 
 // 文字转语音
-var rsp = await _difyAIService.Audios.TextToAudioAsync(req);
+await _difyAIService.Audios.TextToAudioAsync(req);
+```
+
+### 会话
+```csharp
+// 获取会话列表
+await _difyAIService.Conversations.ListAsync(req);
+
+// 会话重命名
+await _difyAIService.Conversations.RenameAsync(req);
+
+// 删除会话
+await _difyAIService.Conversations.DeleteAsync(req);
+```
+### 消息
+```csharp
+// 获取会话历史消息
+await _difyAIService.Messages.HistoryAsync(req);
+
+// 消息反馈（点赞）
+await _difyAIService.Messages.FeedbackAsync(req);
+
+// 获取下一轮建议问题列表
+await _difyAIService.Messages.SuggestedAsync(req);
 ```
