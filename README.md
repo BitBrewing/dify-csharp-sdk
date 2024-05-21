@@ -68,7 +68,7 @@ await _difyAIService.CompletionMessages.StopCompletionAsync(req);
 await _difyAIService.Files.UploadAsync(req);
 ```
 
-### 音频
+### 语音
 ```csharp
 // 语音转文字
 await _difyAIService.Audios.AudioToTextAsync(req);
