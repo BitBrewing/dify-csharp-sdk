@@ -8,31 +8,32 @@ using System.Threading.Tasks;
 
 namespace DifyAI.Interfaces
 {
-    public interface IMessagesService
+    public interface IConversationsService
     {
         /// <summary>
-        /// 消息反馈（点赞）
+        /// 删除会话
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task FeedbacksAsync(MessageFeedbacksRequest request, CancellationToken cancellationToken = default);
+        Task DeleteAsync(ConversationDeleteRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 获取会话历史消息
+        /// 获取会话列表
         /// </summary>
-        /// <remarks>滚动加载形式返回历史聊天记录，第一页返回最新 limit 条，即：倒序返回。</remarks>
+        /// <remarks>获取当前用户的会话列表，默认返回最近的 20 条。</remarks>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<MessageHistoryResponse> HistoryAsync(MessageHistoryRequest request, CancellationToken cancellationToken = default);
+        Task<ConversationListResponse> ListAsync(ConversationListRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 获取下一轮建议问题列表
+        /// 会话重命名
         /// </summary>
+        /// <remarks>对会话进行重命名，会话名称用于显示在支持多会话的客户端上。</remarks>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<MessageSuggestedResponse> SuggestedAsync(MessageSuggestedRequest request, CancellationToken cancellationToken = default);
+        Task<ConversationRenameResponse> RenameAsync(ConversationRenameRequest request, CancellationToken cancellationToken = default);
     }
 }

@@ -35,5 +35,10 @@ namespace DifyAI.Interfaces
         /// 语音
         /// </summary>
         IAudiosService Audios { get; }
+
+        /// <summary>
+        /// 会话
+        /// </summary>
+        IConversationsService Conversations { get; }
     }
 }

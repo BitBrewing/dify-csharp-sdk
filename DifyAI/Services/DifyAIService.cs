@@ -18,6 +18,7 @@ namespace DifyAI.Services
             _httpClient = httpClient;
         }
 
+        public IConversationsService Conversations => this;
         public IChatMessagesService ChatMessages => this;
         public IMessagesService Messages => this;
         public IFilesService Files => this;

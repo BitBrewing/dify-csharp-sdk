@@ -19,6 +19,11 @@ namespace DifyAI.Test
             {
                 Query = "你好",
                 User = "user123",
+                Inputs = new Dictionary<string, string>
+                {
+                    ["arg1"] = "1",
+                    ["arg2"] = "2",
+                },
             };
             var rsp = await _difyAIService.ChatMessages.ChatAsync(req);
             Assert.NotNull(rsp.MessageId);

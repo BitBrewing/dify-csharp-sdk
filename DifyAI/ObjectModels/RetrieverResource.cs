@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class CompletionRetrieverResource
+    public class RetrieverResource
     {
         [JsonPropertyName("position")]
         public int Position { get; set; }

@@ -76,6 +76,19 @@ namespace DifyAI
             return responseMessage;
         }
 
+        public static async Task DeleteAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
+        {
+            httpClient.AddAuthorization(requestModel.ApiKey);
+
+            using var content = JsonContent.Create(requestModel, requestModel.GetType(), null, _defaultSerializerOptions);
+            using var requestMessage = new HttpRequestMessage(HttpMethod.Delete, requestUri);
+            requestMessage.Content = content;
+
+            using var responseMessage = await httpClient.SendAsync(requestMessage, cancellationToken);
+
+            await responseMessage.ValidateResponseAsync(cancellationToken);
+        }
+
         public static async Task PostAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
         {
             using var responseMessage = await httpClient.PostCoreAsync(requestUri, requestModel, cancellationToken);
@@ -206,7 +219,7 @@ namespace DifyAI
             // 解析 JSON 为 JsonDocument
             using var doc = JsonDocument.Parse(json);
 
-            return doc.RootElement.EnumerateObject().ToDictionary(x => x.Name, x => x.Value.GetRawText());
+            return doc.RootElement.EnumerateObject().ToDictionary(x => x.Name, x => x.Value.ValueKind == JsonValueKind.String ? x.Value.ToString() : x.Value.GetRawText());
         }
 
         private static string AddQueryString(string url, object obj)

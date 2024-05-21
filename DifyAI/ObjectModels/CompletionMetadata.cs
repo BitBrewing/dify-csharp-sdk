@@ -13,7 +13,7 @@ namespace DifyAI.ObjectModels
         /// 引用和归属分段列表
         /// </summary>
         [JsonPropertyName("retriever_resources")]
-        public IReadOnlyList<CompletionRetrieverResource> RetrieverResources { get; set; }
+        public IReadOnlyList<RetrieverResource> RetrieverResources { get; set; }
 
         /// <summary>
         /// 模型用量信息
