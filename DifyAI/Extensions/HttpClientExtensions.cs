@@ -129,6 +129,8 @@ namespace DifyAI
                 }
 
                 line = line.RemoveIfStartWith("data: ");
+                if (line == "event: ping")
+                    continue;
 
                 T block;
                 try
