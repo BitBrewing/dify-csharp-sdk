@@ -6,7 +6,7 @@ namespace DifyAI.ObjectModels
     /// <summary>
     /// Agent模式下返回文本块事件，即：在Agent模式下，文章的文本以分块的方式输出（仅Agent模式下使用）
     /// </summary>
-	public class ChunkCompletionAgentMessageResponse
+	public class ChunkCompletionAgentMessageResponse : ChunkCompletionResponse
 	{
 		/// <summary>
         /// 任务 ID，用于请求跟踪和下方的停止响应接口

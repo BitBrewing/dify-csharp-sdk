@@ -7,7 +7,7 @@ namespace DifyAI.ObjectModels
 	/// <summary>
 	/// Agent模式下有关Agent思考步骤的相关内容，涉及到工具调用（仅Agent模式下使用）
 	/// </summary>
-	public class ChunkCompletionAgentThoughtResponse
+	public class ChunkCompletionAgentThoughtResponse : ChunkCompletionResponse
 	{
 		/// <summary>
 		/// agent_thought ID，每一轮Agent迭代都会有一个唯一的id
