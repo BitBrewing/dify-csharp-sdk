@@ -40,5 +40,10 @@ namespace DifyAI.Interfaces
         /// 会话
         /// </summary>
         IConversationsService Conversations { get; }
+
+        /// <summary>
+        /// 应用
+        /// </summary>
+        IApplicationsService Applications { get;}
     }
 }

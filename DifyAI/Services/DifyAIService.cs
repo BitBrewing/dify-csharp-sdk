@@ -25,5 +25,6 @@ namespace DifyAI.Services
         public IWorkflowsService Workflows => this;
         public ICompletionMessagesService CompletionMessages => this;
         public IAudiosService Audios => this;
+        public IApplicationsService Applications => this;
     }
 }
