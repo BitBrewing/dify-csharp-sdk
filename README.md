@@ -88,6 +88,7 @@ await _difyAIService.Conversations.RenameAsync(req);
 // 删除会话
 await _difyAIService.Conversations.DeleteAsync(req);
 ```
+
 ### 消息
 ```csharp
 // 获取会话历史消息
@@ -98,4 +99,13 @@ await _difyAIService.Messages.FeedbackAsync(req);
 
 // 获取下一轮建议问题列表
 await _difyAIService.Messages.SuggestedAsync(req);
+```
+
+### 应用
+```csharp
+// 获取应用配置信息
+await _difyAIService.Applications.ParametersAsync(req);
+
+// 获取应用Meta信息
+await _difyAIService.Applications.MetaAsync(req);
 ```
