@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
-using DifyAI.Converters;
+using DifyAI.Json;
 namespace DifyAI.ObjectModels
 {
 	public class ChunkCompletionMessageReplaceResponse: ChunkCompletionResponse

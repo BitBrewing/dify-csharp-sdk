@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 
-namespace DifyAI.Converters
+namespace DifyAI.Json
 {
     internal class UnixTimestampConverter : JsonConverter<DateTimeOffset>
     {
