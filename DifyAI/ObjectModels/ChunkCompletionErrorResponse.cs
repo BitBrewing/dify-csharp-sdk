@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
-using DifyAI.ObjectModels;
 
-namespace DifySdk.Dtos
+namespace DifyAI.ObjectModels
 {
     /// <summary>
     /// 流式输出过程中出现的异常会以 stream event 形式输出，收到异常事件后即结束。

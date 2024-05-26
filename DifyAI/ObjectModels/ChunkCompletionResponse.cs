@@ -1,4 +1,4 @@
-﻿using DifyAI.Converters;
+﻿using DifyAI.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,18 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    [JsonConverter(typeof(ChunkCompletionResponseConverter))]
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "event")]
+    [JsonDerivedType(typeof(ChunkCompletionMessageResponse), Event_Message)]
+    [JsonDerivedType(typeof(ChunkCompletionMessageReplaceResponse), Event_MessageReplace)]
+    [JsonDerivedType(typeof(ChunkCompletionMessageFileResponse), Event_MessageFile)]
+    [JsonDerivedType(typeof(ChunkCompletionMessageEndResponse), Event_MessageEnd)]
+    [JsonDerivedType(typeof(ChunkCompletionWorkflowStartedResponse), Event_WorkflowStarted)]
+    [JsonDerivedType(typeof(ChunkCompletionWorkflowFinishedResponse), Event_WorkflowFinished)]
+    [JsonDerivedType(typeof(ChunkCompletionNodeStartedResponse), Event_NodeStarted)]
+    [JsonDerivedType(typeof(ChunkCompletionNodeFinishedResponse), Event_NodeFinished)]
+    [JsonDerivedType(typeof(ChunkCompletionAgentMessageResponse), Event_AgentMessage)]
+    [JsonDerivedType(typeof(ChunkCompletionAgentThoughtResponse), Event_AgentThought)]
+    [JsonDerivedType(typeof(ChunkCompletionErrorResponse), Event_Error)]
     public abstract class ChunkCompletionResponse
     {
         /// <summary>
