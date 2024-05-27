@@ -34,6 +34,22 @@ await foreach (var rsp in _difyAIService.ChatMessages.ChatStreamAsync(req))
 await _difyAIService.ChatMessages.StopChatAsync(req);
 ```
 
+流式模式下，可以根据 rsp.Event 来确定响应类型
+
+|Event|Type|
+|--|--|
+|message|ChunkCompletionMessageResponse|
+|message_replace|ChunkCompletionMessageReplaceResponse|
+|message_file|ChunkCompletionMessageFileResponse|
+|message_end|ChunkCompletionMessageEndResponse|
+|workflow_started|ChunkCompletionWorkflowStartedResponse|
+|workflow_finished|ChunkCompletionWorkflowFinishedResponse|
+|node_started|ChunkCompletionNodeStartedResponse|
+|node_finished|ChunkCompletionNodeFinishedResponse|
+|agent_message|ChunkCompletionAgentMessageResponse|
+|agent_thought|ChunkCompletionAgentThoughtResponse|
+|error|ChunkCompletionErrorResponse|
+
 ### 工作流应用消息
 ```csharp
 // 阻塞模式
