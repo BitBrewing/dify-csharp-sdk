@@ -16,11 +16,16 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageIcon>Logo.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="../README.md" Pack="true" PackagePath="\" />
     <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\Logo.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
