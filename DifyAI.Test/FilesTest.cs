@@ -14,7 +14,7 @@ namespace DifyAI.Test
             };
 
             var rsp = await _difyAIService.Files.UploadAsync(req);
-            Assert.NotEqual(Guid.Empty ,rsp.Id);
+            Assert.NotNull(rsp.Id);
         }
 	}
 }

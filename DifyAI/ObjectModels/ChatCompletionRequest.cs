@@ -41,6 +41,12 @@ namespace DifyAI.ObjectModels
         public string ConversationId { get; set; }
 
         /// <summary>
+        /// 上传的文件
+        /// </summary>
+        [JsonPropertyName("files")]
+        public IEnumerable<CompletionFile> Files { get; set; }
+
+        /// <summary>
         /// （选填）自动生成标题，默认 true。 若设置为 false，则可通过调用会话重命名接口并设置 auto_generate 为 true 实现异步生成标题。
         /// </summary>
         [JsonPropertyName("auto_generate_name")]
