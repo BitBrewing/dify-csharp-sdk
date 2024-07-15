@@ -14,7 +14,7 @@ namespace DifyAI.ObjectModels
         /// ID
         /// </summary>
         [JsonPropertyName("id")]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// 文件名
@@ -44,7 +44,7 @@ namespace DifyAI.ObjectModels
         /// 上传人 ID
         /// </summary>
         [JsonPropertyName("created_by")]
-        public Guid CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
 
         /// <summary>
         /// 上传时间
