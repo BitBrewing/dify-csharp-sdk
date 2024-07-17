@@ -21,7 +21,7 @@ namespace DifyAI.ObjectModels
         public int NumberLimits { get; set; }
 
         /// <summary>
-        /// 
+        /// 分辨率，high-高,low-低
         /// </summary>
         [JsonPropertyName("detail")]
         public string Detail { get; set; }
