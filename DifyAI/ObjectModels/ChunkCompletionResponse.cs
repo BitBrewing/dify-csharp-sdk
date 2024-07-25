@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    [JsonPolymorphic(TypeDiscriminatorPropertyName = "event")]
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "event", DefaultType = typeof(ChunkCompletionUnknownResponse))]
     [JsonDerivedType(typeof(ChunkCompletionMessageResponse), Event_Message)]
     [JsonDerivedType(typeof(ChunkCompletionMessageReplaceResponse), Event_MessageReplace)]
     [JsonDerivedType(typeof(ChunkCompletionMessageFileResponse), Event_MessageFile)]

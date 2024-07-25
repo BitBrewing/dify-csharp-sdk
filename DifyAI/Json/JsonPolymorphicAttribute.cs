@@ -15,26 +15,30 @@ namespace DifyAI.Json
         public override JsonConverter CreateConverter(Type typeToConvert)
         {
             var derivedTypes = _derivedTypesMap.GetOrAdd(
-                typeToConvert, 
+                typeToConvert,
                 type => type
                     .GetCustomAttributes<JsonDerivedTypeAttribute>()
                     .ToDictionary(x => x.TypeDiscriminator, x => x.DerivedType)
                 );
 
-            return new JsonPolymorphicConverter(TypeDiscriminatorPropertyName, derivedTypes);
+            return new JsonPolymorphicConverter(TypeDiscriminatorPropertyName, derivedTypes, DefaultType);
         }
 
         public string TypeDiscriminatorPropertyName { get; set; } = "type";
+
+        public Type DefaultType { get; set; }
 
         private class JsonPolymorphicConverter : JsonConverter<object>
         {
             private readonly string _typeDiscriminatorPropertyName;
             private readonly Dictionary<string, Type> _derivedTypes;
+            private readonly Type _defaultType;
 
-            public JsonPolymorphicConverter(string typeDiscriminatorPropertyName, Dictionary<string, Type> derivedTypes)
+            public JsonPolymorphicConverter(string typeDiscriminatorPropertyName, Dictionary<string, Type> derivedTypes, Type defaultType)
             {
                 _typeDiscriminatorPropertyName = typeDiscriminatorPropertyName;
                 _derivedTypes = derivedTypes;
+                _defaultType = defaultType;
             }
 
             public override bool CanConvert(Type typeToConvert)
@@ -51,6 +55,9 @@ namespace DifyAI.Json
 
                 if (_derivedTypes.TryGetValue(type, out var derivedType))
                     return JsonSerializer.Deserialize(root.GetRawText(), derivedType, options);
+
+                if (_defaultType != null)
+                    return JsonSerializer.Deserialize(root.GetRawText(), _defaultType, options);
 
                 throw new JsonException($"Unrecognized {_typeDiscriminatorPropertyName}: {type}");
             }
