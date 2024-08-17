@@ -4,6 +4,9 @@ using DifyAI.Services;
 using DifyAI.Options;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -31,12 +34,6 @@ namespace Microsoft.Extensions.DependencyInjection
 
                     httpClient.BaseAddress = host.Uri;
                     httpClient.AddAuthorization(options.DefaultApiKey);
-                })
-                // Pass the configured DifyAIOptions to the DifyAIService
-                .AddTypedClient((httpClient, provider) =>
-                {
-                    var options = provider.GetService<IOptions<DifyAIOptions>>();
-                    return new DifyAIService(httpClient, options);
                 });
         }
     }

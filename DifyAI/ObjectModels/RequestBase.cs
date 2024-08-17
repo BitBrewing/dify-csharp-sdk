@@ -1,4 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
@@ -9,9 +14,5 @@ namespace DifyAI.ObjectModels
         /// </summary>
         [JsonIgnore]
         public string ApiKey { get; set; }
-    }
-
-    public class EmptyRequest : RequestBase
-    {
     }
 }

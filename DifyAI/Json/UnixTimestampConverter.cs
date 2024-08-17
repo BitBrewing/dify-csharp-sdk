@@ -19,34 +19,4 @@ namespace DifyAI.Json
             writer.WriteNumberValue(dateTimeValue.ToUnixTimeSeconds());
         }
     }
-    
-    internal class UnixTimestampNullConverter : JsonConverter<DateTimeOffset?>
-    {
-        public override DateTimeOffset? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType == JsonTokenType.Null)
-            {
-                return null;
-            }
-
-            if (reader.TokenType == JsonTokenType.Number && reader.TryGetInt64(out long timestamp))
-            {
-                return DateTimeOffset.FromUnixTimeSeconds(timestamp).UtcDateTime;
-            }
-
-            throw new JsonException("Invalid Unix timestamp format");
-        }
-
-        public override void Write(Utf8JsonWriter writer, DateTimeOffset? value, JsonSerializerOptions options)
-        {
-            if (value.HasValue)
-            {
-                writer.WriteNumberValue(value.Value.ToUnixTimeSeconds());
-            }
-            else
-            {
-                writer.WriteNullValue();
-            }
-        }
-    }
 }
