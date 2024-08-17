@@ -15,5 +15,10 @@ namespace DifyAI.Options
         /// API 密钥
         /// </summary>
         public string DefaultApiKey { get; set; }
+
+        /// <summary>
+        /// 知识库 API 密钥
+        /// </summary>
+        public string DatasetApiKey { get; set; }
     }
 }
