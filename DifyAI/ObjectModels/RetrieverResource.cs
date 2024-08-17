@@ -34,7 +34,7 @@ namespace DifyAI.ObjectModels
         public string RetrieverFrom { get; set; }
 
         [JsonPropertyName("score")]
-        public float? Score { get; set; }
+        public float Score { get; set; }
 
         [JsonPropertyName("hit_count")]
         public int HitCount { get; set; }
