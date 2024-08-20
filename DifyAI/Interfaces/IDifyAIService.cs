@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DifyAI.Interfaces
+﻿namespace DifyAI.Interfaces
 {
     public interface IDifyAIService
     {
@@ -44,6 +40,11 @@ namespace DifyAI.Interfaces
         /// <summary>
         /// 应用
         /// </summary>
-        IApplicationsService Applications { get;}
+        IApplicationsService Applications { get; }
+
+        /// <summary>
+        /// 知识库
+        /// </summary>
+        IDatasetService Datasets { get; }
     }
 }

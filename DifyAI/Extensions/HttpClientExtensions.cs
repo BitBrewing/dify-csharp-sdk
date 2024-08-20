@@ -208,6 +208,29 @@ namespace DifyAI
             return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
         }
 
+        public static async Task<T> UploadDocumentAsync<T>(this HttpClient httpClient, string requestUri, IUploadRequest requestModel, CancellationToken cancellationToken)
+        {
+            httpClient.AddAuthorization(requestModel.ApiKey);
+
+            using var multipartContent = new MultipartFormDataContent();
+            using var fileStream = File.OpenRead(requestModel.File);
+            using var streamContent = new StreamContent(fileStream);
+
+            multipartContent.AddObjectAsJsonData(requestModel);
+
+            using var fileContent = new StreamContent(fileStream);
+            var mimeType = MimeUtility.GetMimeMapping(requestModel.File);
+            fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);
+
+            multipartContent.Add(fileContent, "file", Path.GetFileName(requestModel.File));
+
+            using var responseMessage = await httpClient.PostAsync(requestUri, multipartContent, cancellationToken);
+
+            await responseMessage.ValidateResponseAsync(cancellationToken);
+
+            return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+        }
+
         private static bool IsJsonContentType(HttpResponseMessage response)
         {
             return response.Content.Headers.ContentType?.MediaType?.Equals(JsonContentType, StringComparison.OrdinalIgnoreCase) ?? false;
@@ -256,6 +279,12 @@ namespace DifyAI
                 var content = new StringContent(value);
                 multipartContent.Add(content, key);
             }
+        }
+
+        private static void AddObjectAsJsonData(this MultipartFormDataContent multipartContent, object obj)
+        {
+            var json = JsonSerializer.Serialize(obj, _defaultSerializerOptions);
+            multipartContent.Add(new StringContent(json), "data");
         }
 
         private class Error
