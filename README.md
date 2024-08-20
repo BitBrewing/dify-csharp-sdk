@@ -125,3 +125,8 @@ await _difyAIService.Applications.ParametersAsync(req);
 // 获取应用Meta信息
 await _difyAIService.Applications.MetaAsync(req);
 ```
+
+## 贡献者
+<a href="https://github.com/falubodhi">
+<img src="https://github.com/falubodhi.png" width="64px;" alt="octocat" style="border-radius:50%;"/>
+</a>
