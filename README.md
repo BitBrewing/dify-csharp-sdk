@@ -126,7 +126,12 @@ await _difyAIService.Applications.ParametersAsync(req);
 await _difyAIService.Applications.MetaAsync(req);
 ```
 
+### 知识库
+```csharp
+await _difyAIService.Datasets...;
+```
+
 ## 贡献者
-<a href="https://github.com/falubodhi">
-<img src="https://github.com/falubodhi.png" width="64px;" alt="octocat" style="border-radius:50%;"/>
+<a href="https://github.com/BitBrewing/dify-csharp-sdk/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=BitBrewing/dify-csharp-sdk" />
 </a>
