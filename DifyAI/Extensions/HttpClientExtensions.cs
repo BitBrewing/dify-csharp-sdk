@@ -1,5 +1,4 @@
 ﻿using DifyAI.ObjectModels;
-using Microsoft.Extensions.Options;
 using MimeMapping;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
@@ -113,7 +111,14 @@ namespace DifyAI
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
-            await using var stream = await responseMessage.Content.ReadAsStreamAsync(cancellationToken);
+#if !NETSTANDARD2_0
+            await
+#endif 
+                using var stream = await responseMessage.Content.ReadAsStreamAsync(
+#if !NETSTANDARD2_0
+                cancellationToken
+#endif
+            );
 
             using var reader = new StreamReader(stream);
 
@@ -250,9 +255,9 @@ namespace DifyAI
         private static string AddQueryString(string url, object obj)
         {
             var queryString = new StringBuilder();
-            foreach (var (key, value) in GetObjectFields(obj))
+            foreach (var fields in GetObjectFields(obj))
             {
-                queryString.Append($"&{key}={Uri.EscapeDataString(value)}");
+                queryString.Append($"&{fields.Key}={Uri.EscapeDataString(fields.Value)}");
             }
 
             if (queryString.Length > 0)
@@ -273,11 +278,11 @@ namespace DifyAI
         private static void AddObjectFields(this MultipartFormDataContent multipartContent, object obj)
         {
             // 迭代 对象的字段并添加到 MultipartFormDataContent
-            foreach (var (key, value) in GetObjectFields(obj))
+            foreach (var fields in GetObjectFields(obj))
             {
                 // 创建 StringContent 并添加到 MultipartFormDataContent
-                var content = new StringContent(value);
-                multipartContent.Add(content, key);
+                var content = new StringContent(fields.Value);
+                multipartContent.Add(content, fields.Key);
             }
         }
 
