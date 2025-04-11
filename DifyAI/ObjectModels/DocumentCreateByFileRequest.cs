@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class DocumentCreateByFileRequest : RequestBase, IUploadRequest
+    public class DocumentCreateByFileRequest : DocumentCreateRequestBase, IUploadRequest
     {
         /// <summary>
         ///     Dataset Id
@@ -25,20 +26,5 @@ namespace DifyAI.ObjectModels
         /// </summary>
         [JsonPropertyName("original_document_id")]
         public string OriginalDocumentId { get; set; }
-
-        /// <summary>
-        ///     Index mode
-        ///     high_quality : embedding using embedding model, built as vector database index
-        ///     economy : Build using inverted index of Keyword Table Index
-        /// </summary>
-        /// <returns></returns>
-        [JsonPropertyName("indexing_technique")]
-        public string IndexingTechnique { get; set; }
-
-        /// <summary>
-        ///     Preprocessing rules
-        /// </summary>
-        [JsonPropertyName("process_rule")]
-        public DatasetProcessRule ProcessRule { get; set; }
     }
 }
