@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class DocumentCreateByTextRequest : DocumentCreateRequestBase
+    public class DocumentUpsetByTextRequest : DocumentUpsetRequestBase
     {
         public const string IndexingTechniqueHighQuality = "high_quality";
         public const string IndexingTechniqueEconomy = "economy";

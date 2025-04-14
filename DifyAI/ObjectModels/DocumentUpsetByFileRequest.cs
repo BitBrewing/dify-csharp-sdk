@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class DocumentCreateByFileRequest : DocumentCreateRequestBase, IUploadRequest
+    public class DocumentUpsetByFileRequest : DocumentUpsetRequestBase, IUploadRequest
     {
         /// <summary>
         ///     Dataset Id
