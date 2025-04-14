@@ -31,7 +31,7 @@ namespace DifyAI.Services
 
         public async Task StopWorkflowAsync(StopCompletionRequest request, CancellationToken cancellationToken = default)
         {
-            await _httpClient.PostAsync($"workflows/{Uri.EscapeDataString(request.TaskId)}/stop", request, cancellationToken);
+            await _httpClient.PostAsync($"workflows/tasks/{Uri.EscapeDataString(request.TaskId)}/stop", request, cancellationToken);
         }
     }
 }

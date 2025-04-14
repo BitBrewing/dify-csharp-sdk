@@ -50,7 +50,7 @@ namespace DifyAI.Services
             }
         }
 
-        public async Task<DocumentResponse> CreateDocumentByTextAsync(DocumentCreateByTextRequest request, CancellationToken cancellationToken = default)
+        public async Task<DocumentResponse> CreateDocumentByTextAsync(DocumentUpsetByTextRequest request, CancellationToken cancellationToken = default)
         {
             UseDatasetApiKey();
             try
@@ -76,7 +76,7 @@ namespace DifyAI.Services
             }
         }
 
-        public async Task<DocumentResponse> CreateDocumentByFileAsync(DocumentCreateByFileRequest request, CancellationToken cancellationToken = default)
+        public async Task<DocumentResponse> CreateDocumentByFileAsync(DocumentUpsetByFileRequest request, CancellationToken cancellationToken = default)
         {
             UseDatasetApiKey();
             try
@@ -194,5 +194,18 @@ namespace DifyAI.Services
             }
         }
 
+        public async Task<DatasetRetrieveResponse> RetrieveDatasetAsync(DatasetRetrieveRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            UseDatasetApiKey();
+            try
+            {
+                return await _httpClient.PostAsAsync<DatasetRetrieveResponse>($"/datasets/{request.DatasetId}/retrieve", request, cancellationToken);
+            }
+            finally
+            {
+                UseDefaultApiKey();
+            }
+        }
     }
 }

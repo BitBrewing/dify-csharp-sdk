@@ -12,7 +12,7 @@ namespace DifyAI.Interfaces
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<DocumentResponse> CreateDocumentByTextAsync(DocumentCreateByTextRequest request, CancellationToken cancellationToken = default);
+        Task<DocumentResponse> CreateDocumentByTextAsync(DocumentUpsetByTextRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update document by text
@@ -47,12 +47,20 @@ namespace DifyAI.Interfaces
         Task DeleteDatasetAsync(DatasetDeleteRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Retrieve a dataset
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<DatasetRetrieveResponse> RetrieveDatasetAsync(DatasetRetrieveRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Create document by file
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<DocumentResponse> CreateDocumentByFileAsync(DocumentCreateByFileRequest request, CancellationToken cancellationToken = default);
+        Task<DocumentResponse> CreateDocumentByFileAsync(DocumentUpsetByFileRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update document by file

@@ -61,12 +61,12 @@ namespace DifyAI.Test
             try
             {
                 //create document in the dataset
-                var reqDocCreateTxt = new DocumentCreateByTextRequest
+                var reqDocCreateTxt = new DocumentUpsetByTextRequest
                 {
                     Name = "test2",
                     Text = "这是一个测试文档2",
                     DatasetId = rspDatasetCreate.Id,
-                    IndexingTechnique = DocumentCreateByTextRequest.IndexingTechniqueEconomy,
+                    IndexingTechnique = DocumentUpsetByTextRequest.IndexingTechniqueEconomy,
                     ProcessRule = new DatasetProcessRule()
                     {
                         Mode = DatasetProcessRule.ModeAutomatic
@@ -100,7 +100,7 @@ namespace DifyAI.Test
                     DocumentId = rspDocCreateTxt.Document.Id,
                     Name = "test2_update",
                     Text = "这是一个测试文档2 update",
-                    IndexingTechnique = DocumentCreateByTextRequest.IndexingTechniqueEconomy,
+                    IndexingTechnique = DocumentUpsetByTextRequest.IndexingTechniqueEconomy,
                     ProcessRule = new DatasetProcessRule()
                     {
                         Mode = DatasetProcessRule.ModeAutomatic
@@ -147,11 +147,11 @@ namespace DifyAI.Test
             try
             {
                 //create document in the dataset
-                var reqDocCreateDoc = new DocumentCreateByFileRequest
+                var reqDocCreateDoc = new DocumentUpsetByFileRequest
                 {
                     File = Path.Join(AppDomain.CurrentDomain.BaseDirectory, "Assets/Text1.txt"),
                     DatasetId = rspDatasetCreate.Id,
-                    IndexingTechnique = DocumentCreateByTextRequest.IndexingTechniqueEconomy,
+                    IndexingTechnique = DocumentUpsetByTextRequest.IndexingTechniqueEconomy,
                     ProcessRule = new DatasetProcessRule()
                     {
                         Mode = DatasetProcessRule.ModeAutomatic
@@ -184,7 +184,7 @@ namespace DifyAI.Test
                     File = Path.Join(AppDomain.CurrentDomain.BaseDirectory, "Assets/Text2.txt"),
                     DatasetId = rspDatasetCreate.Id,
                     DocumentId = rspDocCreateDoc.Document.Id,
-                    IndexingTechnique = DocumentCreateByTextRequest.IndexingTechniqueEconomy,
+                    IndexingTechnique = DocumentUpsetByTextRequest.IndexingTechniqueEconomy,
                     ProcessRule = new DatasetProcessRule()
                     {
                         Mode = DatasetProcessRule.ModeAutomatic
@@ -230,12 +230,12 @@ namespace DifyAI.Test
             try
             {
                 //create document in the dataset
-                var reqDocCreateTxt = new DocumentCreateByTextRequest
+                var reqDocCreateTxt = new DocumentUpsetByTextRequest
                 {
                     Name = "test_translate_doc_segment",
                     Text = "seg1",
                     DatasetId = rspDatasetCreate.Id,
-                    IndexingTechnique = DocumentCreateByTextRequest.IndexingTechniqueEconomy,
+                    IndexingTechnique = DocumentUpsetByTextRequest.IndexingTechniqueEconomy,
                     ProcessRule = new DatasetProcessRule()
                     {
                         Mode = DatasetProcessRule.ModeAutomatic

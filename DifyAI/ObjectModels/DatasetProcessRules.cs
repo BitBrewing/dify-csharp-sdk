@@ -35,6 +35,18 @@ namespace DifyAI.ObjectModels
         /// </summary>
         [JsonPropertyName("segmentation")]
         public DatasetProcessRuleSegmentation Segmentation { get; set; }
+
+        /// <summary>
+        /// 父分段的召回模式 full-doc 全文召回 / paragraph 段落召回
+        /// </summary>
+        [JsonPropertyName("parent_mode")]
+        public string ParentMode { get; set; }
+
+        /// <summary>
+        /// 子分段规则
+        /// </summary>
+        [JsonPropertyName("subchunk_segmentation")]
+        public DatasetSubchunkSegmentation SubchunkSegmentation { get; set; }
     }
 
     public class DatasetProcessRuleSegmentation
