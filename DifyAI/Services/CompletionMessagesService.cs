@@ -10,14 +10,14 @@ namespace DifyAI.Services
 {
 	partial class DifyAIService: ICompletionMessagesService
     {
-		public async Task<ChatCompletionResponse> CompletionAsync(ChatCompletionRequest request, CancellationToken cancellationToken = default)
+		public async Task<ChatCompletionResponse> CompletionAsync(CompletionRequest request, CancellationToken cancellationToken = default)
         {
             request.ResponseMode = "blocking";
 
             return await _httpClient.PostAsAsync<ChatCompletionResponse>("completion-messages", request, cancellationToken);
         }
 
-        public async IAsyncEnumerable<ChunkCompletionResponse> CompletionStreamAsync(ChatCompletionRequest request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<ChunkCompletionResponse> CompletionStreamAsync(CompletionRequest request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             request.ResponseMode = "streaming";
 

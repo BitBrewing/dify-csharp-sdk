@@ -20,7 +20,7 @@ services
 private readonly IDifyAIService _difyAIService;
 ```
 
-### 聊天助手、Agent 应用消息
+### 聊天助手、Agent 应用消息、工作流编排对话型应用
 ```csharp
 // 阻塞模式
 var rsp = await _difyAIService.ChatMessages.ChatAsync(req);
@@ -67,6 +67,16 @@ await _difyAIService.Workflows.StopWorkflowAsync(req);
 ### 文本生成应用消息
 ```csharp
 // 阻塞模式
+var req = new CompletionRequest
+{
+    ApiKey = "app-vvEU80qX2dGBbjKTQJTqr0HW",
+    User = "user123",
+    Inputs =
+    {
+        // 必填
+        ["query"] = "hello!"
+    }
+};
 var rsp = await _difyAIService.CompletionMessages.CompletionAsync(req);
 
 // 流式模式

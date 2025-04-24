@@ -7,7 +7,7 @@
     <Authors>BitBrewing</Authors>
     <Company>Yiqifei</Company>
     <Description>DifyAI SDK https://dify.ai/</Description>
-    <Version>3.3.0</Version>
+    <Version>3.4.0</Version>
     <PackageProjectUrl>https://github.com/BitBrewing/dify-csharp-sdk</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>dify</PackageTags>
