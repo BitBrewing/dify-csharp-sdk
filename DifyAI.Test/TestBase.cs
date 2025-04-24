@@ -1,6 +1,9 @@
 ﻿using System;
 using DifyAI.Interfaces;
+using DifyAI.Options;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 namespace DifyAI.Test
 {
 	public class TestBase
@@ -10,14 +13,14 @@ namespace DifyAI.Test
         public TestBase()
         {
             var services = new ServiceCollection();
+            
+            var config = new ConfigurationBuilder()
+                .AddUserSecrets(GetType().Assembly)
+                .Build();
 
-            services
-                .AddDifyAIService(x =>
-                {
-                    x.BaseDomain = "http://localhost/v1";
-                    x.DefaultApiKey = "app-i8zgSq0L0Pk6ixmvbJCHFGcU";
-                    x.DatasetApiKey = "dataset-rg6t21M26kP3F4ron3QtEVQT";
-                });
+            services.Configure<DifyAIOptions>(config.GetSection("DifyAI"));
+
+            services.AddDifyAIService();
 
             var app = services.BuildServiceProvider();
             _difyAIService = app.GetRequiredService<IDifyAIService>();

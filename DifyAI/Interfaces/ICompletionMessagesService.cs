@@ -13,7 +13,7 @@ namespace DifyAI.Interfaces
 		/// <param name="request"></param>
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
-		Task<ChatCompletionResponse> CompletionAsync(ChatCompletionRequest request, CancellationToken cancellationToken = default);
+		Task<ChatCompletionResponse> CompletionAsync(CompletionRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
 		/// 发送消息（流式模式）
@@ -21,7 +21,7 @@ namespace DifyAI.Interfaces
 		/// <param name="request"></param>
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
-        IAsyncEnumerable<ChunkCompletionResponse> CompletionStreamAsync(ChatCompletionRequest request, CancellationToken cancellationToken = default);
+        IAsyncEnumerable<ChunkCompletionResponse> CompletionStreamAsync(CompletionRequest request, CancellationToken cancellationToken = default);
 
 		/// <summary>
 		/// 停止响应
