@@ -23,5 +23,15 @@ namespace DifyAI.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<ApplicationMetaResponse> MetaAsync(ApplicationMetaRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 获取应用基本信息
+        /// </summary>
+        /// <remarks>用于获取应用的基本信息</remarks>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<ApplicationInfoResponse> InfoAsync(ApplicationInfoRequest request,
+            CancellationToken cancellationToken = default);
     }
 }

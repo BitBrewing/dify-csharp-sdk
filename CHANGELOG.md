@@ -1,5 +1,8 @@
 # 更新历史
 
+## 3.5.0
+- 新增：获取应用基本信息接口`Applications.InfoAsync` [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16)
+
 ## 3.4.0
 - 将 `CompletionMessages.CompletionAsync/CompletionStreamAsync`参数由`ChatCompletionRequest`改为`CompletionRequest` [#14](https://github.com/BitBrewing/dify-csharp-sdk/issues/14)
 
