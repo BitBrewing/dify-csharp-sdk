@@ -16,5 +16,10 @@ namespace DifyAI.Services
         {
             return await _httpClient.GetAsAsync<ApplicationParametersResponse>("parameters", request, cancellationToken);
         }
+
+        public async Task<ApplicationInfoResponse> InfoAsync(ApplicationInfoRequest request, CancellationToken cancellationToken = default)
+        {
+            return await _httpClient.GetAsAsync<ApplicationInfoResponse>("info", request, cancellationToken);
+        }
     }
 }

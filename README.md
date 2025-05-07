@@ -134,6 +134,9 @@ await _difyAIService.Applications.ParametersAsync(req);
 
 // 获取应用Meta信息
 await _difyAIService.Applications.MetaAsync(req);
+
+// 获取应用基本信息
+await _difyAIService.Applications.InfoAsync(req);
 ```
 
 ### 知识库
