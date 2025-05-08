@@ -26,12 +26,12 @@ namespace DifyAI.Services
 
         private void UseDatasetApiKey()
         {
-            this._httpClient.AddAuthorization(this._datasetApiKey);
+            this._httpClient.AddAuthorization(this._datasetApiKey, "");
         }
 
         private void UseDefaultApiKey()
         {
-            this._httpClient.AddAuthorization(this._defaultApiKey);
+            this._httpClient.AddAuthorization(this._defaultApiKey, "");
         }
 
         public IConversationsService Conversations => this;
