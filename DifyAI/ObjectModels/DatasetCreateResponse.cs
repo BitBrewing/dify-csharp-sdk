@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class DatasetResponse
+    public class DatasetResponse : ResponseBase
     {
         /// <summary>
         /// ID of the dataset

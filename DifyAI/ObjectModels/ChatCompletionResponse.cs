@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class ChatCompletionResponse
+    public class ChatCompletionResponse : ResponseBase
     {
         /// <summary>
         /// message: LLM 返回文本块事件，即：完整的文本以分块的方式输出。

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class DocumentSegmentResponse
+    public class DocumentSegmentResponse : ResponseBase
     {
         /// <summary>
         ///     document embedding progress status
@@ -15,7 +15,7 @@ namespace DifyAI.ObjectModels
         public string DocForm { get; set; }
     }
 
-    public class DocumentSegmentUpdateResponse
+    public class DocumentSegmentUpdateResponse : ResponseBase
     {
         /// <summary>
         ///     document embedding progress status

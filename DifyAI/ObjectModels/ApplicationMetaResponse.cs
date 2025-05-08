@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class ApplicationMetaResponse
+    public class ApplicationMetaResponse : ResponseBase
     {
         [JsonPropertyName("tool_icons")]
         public JsonDocument ToolIcons { get; set; }

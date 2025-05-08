@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class DocumentEmbeddingResponse
+    public class DocumentEmbeddingResponse : ResponseBase
     {
         /// <summary>
         ///     document embedding progress status

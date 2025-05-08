@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class ApplicationParametersResponse
+    public class ApplicationParametersResponse : ResponseBase
     {
         /// <summary>
         /// 开场白

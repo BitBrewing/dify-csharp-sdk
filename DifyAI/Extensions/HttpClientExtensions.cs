@@ -67,8 +67,12 @@ namespace DifyAI
             using var responseMessage = await httpClient.GetAsync(AddQueryString(requestUri, requestModel), cancellationToken);
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
-
-            return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            //return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
+            if(obj != null && obj is ResponseBase)
+                (obj as ResponseBase).RealJsonstring = jsonResponse;
+            return obj;
         }
 
         private static async Task<HttpResponseMessage> PostCoreAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
@@ -105,7 +109,12 @@ namespace DifyAI
         {
             using var responseMessage = await httpClient.PostCoreAsync(requestUri, requestModel, cancellationToken);
 
-            return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            //return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
+            if (obj != null && obj is ResponseBase)
+                (obj as ResponseBase).RealJsonstring = jsonResponse;
+            return obj;
         }
 
         public static async IAsyncEnumerable<T> PostChunkAsAsync<T>(this HttpClient httpClient, string requestUri, IRequest requestModel, [EnumeratorCancellation] CancellationToken cancellationToken)
@@ -162,6 +171,8 @@ namespace DifyAI
 
                 if (null != block)
                 {
+                    if(block is ResponseBase)
+                        (block as ResponseBase).RealJsonstring = line;
                     yield return block;
                 }
             }
@@ -219,7 +230,12 @@ namespace DifyAI
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
-            return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            //return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
+            if (obj != null && obj is ResponseBase)
+                (obj as ResponseBase).RealJsonstring = jsonResponse;
+            return obj;
         }
 
         public static async Task<T> UploadDocumentAsync<T>(this HttpClient httpClient, string requestUri, IUploadRequest requestModel, CancellationToken cancellationToken)
@@ -242,7 +258,12 @@ namespace DifyAI
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
-            return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            //return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
+            if (obj != null && obj is ResponseBase)
+                (obj as ResponseBase).RealJsonstring = jsonResponse;
+            return obj;
         }
 
         private static bool IsJsonContentType(HttpResponseMessage response)

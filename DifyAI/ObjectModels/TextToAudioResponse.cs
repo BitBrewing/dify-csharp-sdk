@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class TextToAudioResponse
+    public class TextToAudioResponse : ResponseBase
     {
         public string MediaType { get; set; }
 

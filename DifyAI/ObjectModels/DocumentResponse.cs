@@ -2,7 +2,7 @@
 
 namespace DifyAI.ObjectModels
 {
-    public class DocumentResponse
+    public class DocumentResponse : ResponseBase
     {
         /// <summary>
         /// Document
