@@ -146,5 +146,5 @@ await _difyAIService.Datasets...;
 
 ## 贡献者
 <a href="https://github.com/BitBrewing/dify-csharp-sdk/graphs/contributors">
-  <img src="https://contributors-img.web.app/image?repo=BitBrewing/dify-csharp-sdk" />
+  <img src="https://contrib.rocks/image?repo=BitBrewing/dify-csharp-sdk" />
 </a>
