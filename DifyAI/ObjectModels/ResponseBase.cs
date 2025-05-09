@@ -9,5 +9,5 @@ public class ResponseBase
     /// 原始JSON字符串
     /// </summary>
     [JsonIgnore]
-    public string RealJsonstring { get; set; }
+    public string RawJson { get; set; }
 }
