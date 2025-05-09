@@ -27,11 +27,20 @@ namespace DifyAI
             NumberHandling = JsonNumberHandling.AllowReadingFromString, // 有些数字型的dify返回为字符串
         };
 
-        public static void AddAuthorization(this HttpClient httpClient, string apiKey)
+        public static void AddAuthorization(this HttpClient httpClient, string apiKey, string baseDomain)
         {
             if (!string.IsNullOrEmpty(apiKey))
             {
                 httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"Bearer {apiKey}");
+            }
+            if (!string.IsNullOrEmpty(baseDomain))
+            {
+                var host = new UriBuilder(baseDomain);
+                if (!host.Path.EndsWith("/"))
+                {
+                    host.Path += "/";
+                }
+                httpClient.BaseAddress = host.Uri;
             }
         }
 
@@ -53,18 +62,22 @@ namespace DifyAI
 
         public static async Task<T> GetAsAsync<T>(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
         {
-            httpClient.AddAuthorization(requestModel.ApiKey);
+            httpClient.AddAuthorization(requestModel.ApiKey, requestModel.BaseDomain);
 
             using var responseMessage = await httpClient.GetAsync(AddQueryString(requestUri, requestModel), cancellationToken);
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
-
-            return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            //return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
+            if(obj != null && obj is ResponseBase)
+                (obj as ResponseBase).RealJsonstring = jsonResponse;
+            return obj;
         }
 
         private static async Task<HttpResponseMessage> PostCoreAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
         {
-            httpClient.AddAuthorization(requestModel.ApiKey);
+            httpClient.AddAuthorization(requestModel.ApiKey, requestModel.BaseDomain);
 
             using var content = JsonContent.Create(requestModel, requestModel.GetType(), null, _defaultSerializerOptions);
             var responseMessage = await httpClient.PostAsync(requestUri, content, cancellationToken);
@@ -76,7 +89,7 @@ namespace DifyAI
 
         public static async Task DeleteAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
         {
-            httpClient.AddAuthorization(requestModel.ApiKey);
+            httpClient.AddAuthorization(requestModel.ApiKey, requestModel.BaseDomain);
 
             using var content = JsonContent.Create(requestModel, requestModel.GetType(), null, _defaultSerializerOptions);
             using var requestMessage = new HttpRequestMessage(HttpMethod.Delete, requestUri);
@@ -96,12 +109,17 @@ namespace DifyAI
         {
             using var responseMessage = await httpClient.PostCoreAsync(requestUri, requestModel, cancellationToken);
 
-            return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            //return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
+            if (obj != null && obj is ResponseBase)
+                (obj as ResponseBase).RealJsonstring = jsonResponse;
+            return obj;
         }
 
         public static async IAsyncEnumerable<T> PostChunkAsAsync<T>(this HttpClient httpClient, string requestUri, IRequest requestModel, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            httpClient.AddAuthorization(requestModel.ApiKey);
+            httpClient.AddAuthorization(requestModel.ApiKey, requestModel.BaseDomain);
 
             using var content = JsonContent.Create(requestModel, requestModel.GetType(), null, _defaultSerializerOptions);
             using var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
@@ -153,6 +171,8 @@ namespace DifyAI
 
                 if (null != block)
                 {
+                    if(block is ResponseBase)
+                        (block as ResponseBase).RealJsonstring = line;
                     yield return block;
                 }
             }
@@ -173,7 +193,7 @@ namespace DifyAI
 
         public static async Task<HttpResponseMessage> DownloadAsync(this HttpClient httpClient, string requestUri, IRequest requestModel, CancellationToken cancellationToken)
         {
-            httpClient.AddAuthorization(requestModel.ApiKey);
+            httpClient.AddAuthorization(requestModel.ApiKey, requestModel.BaseDomain);
 
             using var content = JsonContent.Create(requestModel, requestModel.GetType(), null, _defaultSerializerOptions);
 
@@ -192,7 +212,7 @@ namespace DifyAI
 
         public static async Task<T> UploadAsAsync<T>(this HttpClient httpClient, string requestUri, IUploadRequest requestModel, CancellationToken cancellationToken)
         {
-            httpClient.AddAuthorization(requestModel.ApiKey);
+            httpClient.AddAuthorization(requestModel.ApiKey, requestModel.BaseDomain);
 
             using var multipartContent = new MultipartFormDataContent();
             using var fileStream = File.OpenRead(requestModel.File);
@@ -210,12 +230,17 @@ namespace DifyAI
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
-            return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            //return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
+            if (obj != null && obj is ResponseBase)
+                (obj as ResponseBase).RealJsonstring = jsonResponse;
+            return obj;
         }
 
         public static async Task<T> UploadDocumentAsync<T>(this HttpClient httpClient, string requestUri, IUploadRequest requestModel, CancellationToken cancellationToken)
         {
-            httpClient.AddAuthorization(requestModel.ApiKey);
+            httpClient.AddAuthorization(requestModel.ApiKey, requestModel.BaseDomain);
 
             using var multipartContent = new MultipartFormDataContent();
             using var fileStream = File.OpenRead(requestModel.File);
@@ -233,7 +258,12 @@ namespace DifyAI
 
             await responseMessage.ValidateResponseAsync(cancellationToken);
 
-            return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            //return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
+            string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
+            if (obj != null && obj is ResponseBase)
+                (obj as ResponseBase).RealJsonstring = jsonResponse;
+            return obj;
         }
 
         private static bool IsJsonContentType(HttpResponseMessage response)

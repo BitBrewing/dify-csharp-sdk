@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class ConversationRenameResponse
+    public class ConversationRenameResponse : ResponseBase
     {
         /// <summary>
         /// 会话 ID

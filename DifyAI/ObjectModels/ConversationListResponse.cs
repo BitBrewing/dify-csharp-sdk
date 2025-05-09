@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
-    public class ConversationListResponse
+    public class ConversationListResponse : ResponseBase
     {
         /// <summary>
         /// 返回条数，若传入超过系统限制，返回系统限制数量

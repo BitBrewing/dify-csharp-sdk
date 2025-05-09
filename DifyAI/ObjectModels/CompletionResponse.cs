@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class CompletionResponse
+    public class CompletionResponse : ResponseBase
     {
         /// <summary>
         /// workflow 执行 ID

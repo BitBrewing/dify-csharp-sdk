@@ -9,5 +9,6 @@ namespace DifyAI.ObjectModels
     internal interface IRequest
     {
         string ApiKey { get; }
+        string BaseDomain { get; }
     }
 }

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
-    public class MessageHistoryResponse
+    public class MessageHistoryResponse : ResponseBase
     {
         /// <summary>
         /// 返回条数，若传入超过系统限制，返回系统限制数量

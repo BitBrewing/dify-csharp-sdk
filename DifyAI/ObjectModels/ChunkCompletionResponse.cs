@@ -20,7 +20,7 @@ namespace DifyAI.ObjectModels
     [JsonDerivedType(typeof(ChunkCompletionAgentMessageResponse), Event_AgentMessage)]
     [JsonDerivedType(typeof(ChunkCompletionAgentThoughtResponse), Event_AgentThought)]
     [JsonDerivedType(typeof(ChunkCompletionErrorResponse), Event_Error)]
-    public abstract class ChunkCompletionResponse
+    public abstract class ChunkCompletionResponse : ResponseBase
     {
         /// <summary>
         /// LLM 返回文本块事件，即：完整的文本以分块的方式输出。

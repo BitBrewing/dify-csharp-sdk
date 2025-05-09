@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels;
 
-public class DatasetRetrieveResponse
+public class DatasetRetrieveResponse : ResponseBase
 {
     [JsonPropertyName("query")]
     public DatasetQuery Query { get; set; }

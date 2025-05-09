@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels;
 
-public class ApplicationInfoResponse
+public class ApplicationInfoResponse : ResponseBase
 {
     /// <summary>
     /// 应用名称
