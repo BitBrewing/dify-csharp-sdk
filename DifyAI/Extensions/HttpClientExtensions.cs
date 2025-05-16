@@ -46,25 +46,6 @@ namespace DifyAI
             }
         }
 
-        private static async Task ValidateResponseAsync(this HttpResponseMessage responseMessage,
-            CancellationToken cancellationToken)
-        {
-            if (!responseMessage.IsSuccessStatusCode)
-            {
-                if (IsJsonContentType(responseMessage))
-                {
-                    var error = await responseMessage.Content.ReadFromJsonAsync<Error>(_defaultSerializerOptions,
-                        cancellationToken);
-                    throw new DifyAIException(error.Code, error.Message, error.Status);
-                }
-                else
-                {
-                    throw new HttpRequestException(
-                        $"Response status code does not indicate success: {(int)responseMessage.StatusCode} ({responseMessage.ReasonPhrase}).");
-                }
-            }
-        }
-
         public static async Task<T> GetAsAsync<T>(this HttpClient httpClient, string requestUri, IRequest requestModel,
             CancellationToken cancellationToken) where T : ResponseBase
         {
@@ -73,17 +54,7 @@ namespace DifyAI
             using var responseMessage =
                 await httpClient.GetAsync(AddQueryString(requestUri, requestModel), cancellationToken);
 
-            await responseMessage.ValidateResponseAsync(cancellationToken);
-            //return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
-            string jsonResponse = await responseMessage.Content.ReadAsStringAsync(
-#if !NETSTANDARD1_2_OR_GREATER
-                cancellationToken
-#endif
-            );
-            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
-            if (obj != null)
-                obj.RawJson = jsonResponse;
-            return obj;
+            return await responseMessage.ResolveAsAsync<T>(cancellationToken);
         }
 
         private static async Task<HttpResponseMessage> PostCoreAsync(this HttpClient httpClient, string requestUri,
@@ -126,16 +97,29 @@ namespace DifyAI
         {
             using var responseMessage = await httpClient.PostCoreAsync(requestUri, requestModel, cancellationToken);
 
-            //return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
-            string jsonResponse = await responseMessage.Content.ReadAsStringAsync(
+            return await responseMessage.ResolveAsAsync<T>(cancellationToken);
+        }
+
+        public static async Task<T> PatchAsAsync<T>(this HttpClient httpClient, string requestUri,
+            IRequest requestModel,
+            CancellationToken cancellationToken) where T : ResponseBase
+        {
+            httpClient.AddAuthorization(requestModel.ApiKey, requestModel.BaseDomain);
+
+            using var content =
+                JsonContent.Create(requestModel, requestModel.GetType(), null, _defaultSerializerOptions);
+            
 #if !NETSTANDARD2_0
-                cancellationToken
+            using var responseMessage = await httpClient.PatchAsync(requestUri, content, cancellationToken);
+#else
+            var request = new HttpRequestMessage(new HttpMethod("PATCH"), requestUri)
+            {
+                Content = content
+            };
+            using var responseMessage = await httpClient.SendAsync(request, cancellationToken);
 #endif
-            );
-            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
-            if (obj != null)
-                obj.RawJson = jsonResponse;
-            return obj;
+
+            return await responseMessage.ResolveAsAsync<T>(cancellationToken);
         }
 
         public static async IAsyncEnumerable<T> PostChunkAsAsync<T>(this HttpClient httpClient, string requestUri,
@@ -156,11 +140,11 @@ namespace DifyAI
 #if !NETSTANDARD2_0
             await
 #endif
-            using var stream = await responseMessage.Content.ReadAsStreamAsync(
+                using var stream = await responseMessage.Content.ReadAsStreamAsync(
 #if !NETSTANDARD2_0
-                cancellationToken
+                    cancellationToken
 #endif
-            );
+                );
 
             using var reader = new StreamReader(stream);
 
@@ -254,18 +238,7 @@ namespace DifyAI
 
             using var responseMessage = await httpClient.PostAsync(requestUri, multipartContent, cancellationToken);
 
-            await responseMessage.ValidateResponseAsync(cancellationToken);
-
-            //return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
-            string jsonResponse = await responseMessage.Content.ReadAsStringAsync(
-#if !NETSTANDARD2_0
-                cancellationToken
-#endif
-            );
-            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
-            if (obj != null)
-                obj.RawJson = jsonResponse;
-            return obj;
+            return await responseMessage.ResolveAsAsync<T>(cancellationToken);
         }
 
         public static async Task<T> UploadDocumentAsync<T>(this HttpClient httpClient, string requestUri,
@@ -287,18 +260,7 @@ namespace DifyAI
 
             using var responseMessage = await httpClient.PostAsync(requestUri, multipartContent, cancellationToken);
 
-            await responseMessage.ValidateResponseAsync(cancellationToken);
-
-            //return await responseMessage.Content.ReadFromJsonAsync<T>(_defaultSerializerOptions, cancellationToken);
-            string jsonResponse = await responseMessage.Content.ReadAsStringAsync(
-#if !NETSTANDARD2_0
-                cancellationToken
-#endif
-            );
-            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
-            if (obj != null)
-                obj.RawJson = jsonResponse;
-            return obj;
+            return await responseMessage.ResolveAsAsync<T>(cancellationToken);
         }
 
         private static bool IsJsonContentType(HttpResponseMessage response)
@@ -357,6 +319,41 @@ namespace DifyAI
         {
             var json = JsonSerializer.Serialize(obj, _defaultSerializerOptions);
             multipartContent.Add(new StringContent(json), "data");
+        }
+
+        private static async Task ValidateResponseAsync(this HttpResponseMessage responseMessage,
+            CancellationToken cancellationToken)
+        {
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                if (IsJsonContentType(responseMessage))
+                {
+                    var error = await responseMessage.Content.ReadFromJsonAsync<Error>(_defaultSerializerOptions,
+                        cancellationToken);
+                    throw new DifyAIException(error.Code, error.Message, error.Status);
+                }
+                else
+                {
+                    throw new HttpRequestException(
+                        $"Response status code does not indicate success: {(int)responseMessage.StatusCode} ({responseMessage.ReasonPhrase}).");
+                }
+            }
+        }
+
+        private static async Task<T> ResolveAsAsync<T>(this HttpResponseMessage responseMessage,
+            CancellationToken cancellationToken) where T : ResponseBase
+        {
+            await responseMessage.ValidateResponseAsync(cancellationToken);
+
+            var jsonResponse = await responseMessage.Content.ReadAsStringAsync(
+#if !NETSTANDARD2_0
+                cancellationToken
+#endif
+            );
+            var obj = JsonSerializer.Deserialize<T>(jsonResponse, _defaultSerializerOptions);
+            if (obj != null)
+                obj.RawJson = jsonResponse;
+            return obj;
         }
 
         private class Error

@@ -1,5 +1,10 @@
 # 更新历史
 
+## 3.7.0
+- 新增：查看知识库详情`Datasets.GetDatasetAsync` [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2870547089)
+- 新增：修改知识库详情`Datasets.UpdateDatasetAsync` [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2870547089)
+- 新增：获取嵌入模型列表`Datasets.GetTextEmbeddingModelsAsync` [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2870547089)
+
 ## 3.6.0
 - 新增：请求参数添加`BaseDomain`，以解决多个Dify服务器的情况下，一个BaseDomain不够的问题（贡献者 [@ZeroZ-lab](https://github.com/Rendtime)，PR [#18](https://github.com/BitBrewing/dify-csharp-sdk/pull/18)）
 - 新增：响应内容增加`RawJson`原始Json字符串（贡献者 [@ZeroZ-lab](https://github.com/Rendtime)，PR [#18](https://github.com/BitBrewing/dify-csharp-sdk/pull/18)）
