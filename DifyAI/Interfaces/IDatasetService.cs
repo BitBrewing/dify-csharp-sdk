@@ -37,7 +37,7 @@ namespace DifyAI.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<DatasetListResponse> GetDatasetsAsync(DatasetListRequest request, CancellationToken cancellationToken = default);
-
+        
         /// <summary>
         /// Delete a dataset
         /// </summary>
@@ -126,5 +126,28 @@ namespace DifyAI.Interfaces
         /// <returns></returns>
         Task<DocumentSegmentResponse> GetDocumentSegmentsAsync(DocumentSegmentListRequest request, CancellationToken cancellationToken = default);
 
+        /// <summary>
+        /// 查看知识库详情
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<DatasetGetResponse> GetDatasetAsync(DatasetGetRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 修改知识库详情
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<DatasetUpdateResponse> UpdateDatasetAsync(DatasetUpdateRequest request, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// 获取嵌入模型列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<DatasetGetTextEmbeddingModelsResponse> GetTextEmbeddingModelsAsync(DatasetGetTextEmbeddingModelsRequest request, CancellationToken cancellationToken);
     }
 }
