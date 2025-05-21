@@ -243,7 +243,7 @@ namespace DifyAI.Services
             UseDatasetApiKey();
             try
             {
-                return await _httpClient.GetAsAsync<DatasetGetTextEmbeddingModelsResponse>("/workspaces/current/models/model-types/text-embedding", request, cancellationToken);
+                return await _httpClient.GetAsAsync<DatasetGetTextEmbeddingModelsResponse>("workspaces/current/models/model-types/text-embedding", request, cancellationToken);
             }
             finally
             {

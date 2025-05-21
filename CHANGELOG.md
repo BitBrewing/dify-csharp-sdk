@@ -1,6 +1,6 @@
 # 更新历史
 
-## 3.7.1
+## 3.7.2
 - 修复 3.7.0 新增的三个接口报404的问题 [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2892806931)
 
 ## 3.7.0
