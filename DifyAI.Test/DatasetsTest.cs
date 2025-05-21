@@ -332,5 +332,13 @@ namespace DifyAI.Test
             }
         }
 
+        [Fact]
+        public async Task GetDataset()
+        {
+            await _difyAIService.Datasets.GetDatasetAsync(new DatasetGetRequest
+            {
+                DatasetId = "2f89eb58-0103-41b4-b7f5-85b96c9af364"
+            });
+        }
     }
 }
