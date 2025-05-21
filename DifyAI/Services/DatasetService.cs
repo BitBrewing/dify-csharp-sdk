@@ -201,7 +201,7 @@ namespace DifyAI.Services
             UseDatasetApiKey();
             try
             {
-                return await _httpClient.PostAsAsync<DatasetRetrieveResponse>($"/datasets/{request.DatasetId}/retrieve", request, cancellationToken);
+                return await _httpClient.PostAsAsync<DatasetRetrieveResponse>($"datasets/{request.DatasetId}/retrieve", request, cancellationToken);
             }
             finally
             {
@@ -215,7 +215,7 @@ namespace DifyAI.Services
             UseDatasetApiKey();
             try
             {
-                return await _httpClient.GetAsAsync<DatasetGetResponse>($"/datasets/{request.DatasetId}", request, cancellationToken);
+                return await _httpClient.GetAsAsync<DatasetGetResponse>($"datasets/{request.DatasetId}", request, cancellationToken);
             }
             finally
             {
@@ -229,7 +229,7 @@ namespace DifyAI.Services
             UseDatasetApiKey();
             try
             {
-                return await _httpClient.PatchAsAsync<DatasetUpdateResponse>($"/datasets/{request.DatasetId}", request, cancellationToken);
+                return await _httpClient.PatchAsAsync<DatasetUpdateResponse>($"datasets/{request.DatasetId}", request, cancellationToken);
             }
             finally
             {

@@ -1,5 +1,8 @@
 # 更新历史
 
+## 3.7.1
+- 修复 3.7.0 新增的三个接口报404的问题 [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2892806931)
+
 ## 3.7.0
 - 新增：查看知识库详情`Datasets.GetDatasetAsync` [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2870547089)
 - 新增：修改知识库详情`Datasets.UpdateDatasetAsync` [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2870547089)
