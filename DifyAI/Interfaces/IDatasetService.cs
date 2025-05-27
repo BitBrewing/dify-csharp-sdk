@@ -140,7 +140,7 @@ namespace DifyAI.Interfaces
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<DatasetUpdateResponse> UpdateDatasetAsync(DatasetUpdateRequest request, CancellationToken cancellationToken);
+        Task<DatasetUpdateResponse> UpdateDatasetAsync(DatasetUpdateRequest request, CancellationToken cancellationToken = default);
         
         /// <summary>
         /// 获取嵌入模型列表
@@ -148,6 +148,6 @@ namespace DifyAI.Interfaces
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<DatasetGetTextEmbeddingModelsResponse> GetTextEmbeddingModelsAsync(DatasetGetTextEmbeddingModelsRequest request, CancellationToken cancellationToken);
+        Task<DatasetGetTextEmbeddingModelsResponse> GetTextEmbeddingModelsAsync(DatasetGetTextEmbeddingModelsRequest request, CancellationToken cancellationToken = default);
     }
 }
