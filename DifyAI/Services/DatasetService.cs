@@ -224,7 +224,7 @@ namespace DifyAI.Services
         }
 
         public async Task<DatasetUpdateResponse> UpdateDatasetAsync(DatasetUpdateRequest request,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             UseDatasetApiKey();
             try
@@ -238,7 +238,7 @@ namespace DifyAI.Services
         }
 
         public async Task<DatasetGetTextEmbeddingModelsResponse> GetTextEmbeddingModelsAsync(DatasetGetTextEmbeddingModelsRequest request,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default)
         {
             UseDatasetApiKey();
             try

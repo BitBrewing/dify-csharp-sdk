@@ -58,7 +58,7 @@ public class DatasetGetResponse: ResponseBase
     public string EmbeddingModelProvider { get; set; }
 
     [JsonPropertyName("embedding_available")]
-    public bool EmbeddingAvailable { get; set; }
+    public bool? EmbeddingAvailable { get; set; }
 
     [JsonPropertyName("retrieval_model_dict")]
     public DatasetRetrievalModelDict RetrievalModelDict { get; set; }
