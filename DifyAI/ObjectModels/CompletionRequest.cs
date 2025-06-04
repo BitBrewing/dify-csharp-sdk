@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace DifyAI.ObjectModels
 {
@@ -13,7 +9,7 @@ namespace DifyAI.ObjectModels
         /// 允许传入 App 定义的各变量值。 inputs 参数包含了多组键值对（Key/Value pairs），每组的键对应一个特定变量，每组的值则是该变量的具体值。 默认 {}
         /// </summary>
         [JsonPropertyName("inputs")]
-        public Dictionary<string, string> Inputs { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, object> Inputs { get; set; } = new Dictionary<string, object>();
 
         /// <summary>
         /// <list type="bullet">
