@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
@@ -29,6 +30,7 @@ namespace DifyAI.ObjectModels
         /// <summary>
         /// 上传的文件
         /// </summary>
+        [Obsolete("已弃用，请通过 Inputs 参数上传文件。")]
         [JsonPropertyName("files")]
         public IEnumerable<CompletionFile> Files { get; set; }
     }
