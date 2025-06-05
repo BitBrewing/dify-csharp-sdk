@@ -2,14 +2,14 @@ using DifyAI.ObjectModels;
 
 namespace DifyAI.Test;
 
-public class WorkflowsTest: TestBase
+public class WorkflowsTest : TestBase
 {
     [Fact]
     public async Task WorkflowStream_StartAndStop()
     {
         var req = new CompletionRequest
         {
-            Inputs = new Dictionary<string, string>
+            Inputs = new Dictionary<string, object>
             {
                 { "content", "What is the capital of France?" }
             },
@@ -25,7 +25,7 @@ public class WorkflowsTest: TestBase
                     TaskId = start.TaskId,
                 });
             }
-            
+
             Assert.NotNull(rsp.Event);
         }
     }
