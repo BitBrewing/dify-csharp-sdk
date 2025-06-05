@@ -1,5 +1,8 @@
 # 更新历史
 
+## 3.7.4
+- 修改：运行工作流时，Inputs允许传递obj类型的参数；Files 打过时标记（贡献者 [@jason-lee-x](https://github.com/jason-lee-x)，PR [#27](https://github.com/BitBrewing/dify-csharp-sdk/pull/27)）
+
 ## 3.7.3
 - 修复`Datasets.UpdateDatasetAsync`会出现`The JSON value could not be converted to System.Boolean`错误的问题 [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2909082934)
 
