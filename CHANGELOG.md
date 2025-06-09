@@ -1,5 +1,8 @@
 # 更新历史
 
+## 3.8.0
+- 新增：获取会话变量列表`Conversations.ListVariablesAsync`（贡献者 [@AlexChim1231](https://github.com/AlexChim1231)，PR [#28](https://github.com/BitBrewing/dify-csharp-sdk/pull/28)）
+
 ## 3.7.4
 - 修改：运行工作流时，Inputs允许传递obj类型的参数；Files 打过时标记（贡献者 [@jason-lee-x](https://github.com/jason-lee-x)，PR [#27](https://github.com/BitBrewing/dify-csharp-sdk/pull/27)）
 
