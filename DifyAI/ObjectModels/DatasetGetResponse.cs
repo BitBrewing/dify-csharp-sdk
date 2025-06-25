@@ -35,7 +35,7 @@ public class DatasetGetResponse: ResponseBase
     public int DocumentCount { get; set; }
 
     [JsonPropertyName("word_count")]
-    public int WordCount { get; set; }
+    public int? WordCount { get; set; }
 
     [JsonPropertyName("created_by")]
     public string CreatedBy { get; set; }

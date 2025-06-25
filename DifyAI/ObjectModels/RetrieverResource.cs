@@ -37,13 +37,13 @@ namespace DifyAI.ObjectModels
         public float? Score { get; set; }
 
         [JsonPropertyName("hit_count")]
-        public int HitCount { get; set; }
+        public int? HitCount { get; set; }
 
         [JsonPropertyName("word_count")]
-        public int WordCount { get; set; }
+        public int? WordCount { get; set; }
 
         [JsonPropertyName("segment_position")]
-        public int SegmentPosition { get; set; }
+        public int? SegmentPosition { get; set; }
 
         [JsonPropertyName("index_node_hash")]
         public string IndexNodeHash { get; set; }
