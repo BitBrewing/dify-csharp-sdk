@@ -17,6 +17,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>Logo.png</PackageIcon>
     <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
+    <PackageId>Bjsoft.$(AssemblyName)</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
