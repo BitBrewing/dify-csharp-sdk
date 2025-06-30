@@ -33,5 +33,13 @@ namespace DifyAI.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task StopWorkflowAsync(StopCompletionRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 获取运行详情
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<WorkflowRunDetailResponse> GetRunDetailsAsync(WorkflowRunDetailRequest request, CancellationToken cancellationToken = default);
     }
 }
