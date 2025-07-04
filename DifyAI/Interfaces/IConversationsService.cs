@@ -35,5 +35,13 @@ namespace DifyAI.Interfaces
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<ConversationRenameResponse> RenameAsync(ConversationRenameRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 获取会话变量列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<ConversationVariableListResponse> ListVariablesAsync(ConversationVariableListRequest request, CancellationToken cancellationToken = default);
     }
 }

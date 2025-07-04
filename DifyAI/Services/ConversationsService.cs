@@ -25,5 +25,10 @@ namespace DifyAI.Services
         {
             return await _httpClient.PostAsAsync<ConversationRenameResponse>($"conversations/{Uri.EscapeDataString(request.ConversationId)}/name", request, cancellationToken);
         }
+
+        public async Task<ConversationVariableListResponse> ListVariablesAsync(ConversationVariableListRequest request, CancellationToken cancellationToken = default)
+        {
+            return await _httpClient.GetAsAsync<ConversationVariableListResponse>($"conversations/{Uri.EscapeDataString(request.ConversationId)}/variables?user={Uri.EscapeDataString(request.User)}", request, cancellationToken);
+        }
     }
 }

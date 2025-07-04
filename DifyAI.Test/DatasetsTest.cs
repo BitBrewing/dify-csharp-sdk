@@ -332,5 +332,39 @@ namespace DifyAI.Test
             }
         }
 
+        [Fact]
+        public async Task GetDataset()
+        {
+            await _difyAIService.Datasets.GetDatasetAsync(new DatasetGetRequest
+            {
+                DatasetId = "2f89eb58-0103-41b4-b7f5-85b96c9af364"
+            });
+        }
+        
+        [Fact]
+        public async Task UpdateDataset()
+        {
+            var req = new DatasetUpdateRequest
+            {
+                ApiKey = "dataset-9FO5jr8o6AcfMpNSsgSDe6iZ",
+                DatasetId = "2f89eb58-0103-41b4-b7f5-85b96c9af364",
+                // EmbeddingModelProvider = "langgenius/ollama/ollama",
+                // EmbeddingModel = "snowflake-arctic-embed:22m",
+                IndexingTechnique = "high_quality",
+                PartialMemberList = Array.Empty<string>(),
+                Permission = "all_team_members",
+                RetrievalModelDict = new DatasetRetrievalModelDict
+                {
+                    ScoreThresholdEnabled = false,
+                    ScoreThreshold = 0.55F,
+                    SearchMethod = "hybrid_search",
+                    RerankingEnable = false,
+                    Weights = 0.5F,
+                    RerankingMode = "",
+                    RerankingModel = new DatasetRerankingModel(),
+                }
+            };
+            await _difyAIService.Datasets.UpdateDatasetAsync(req);
+        }
     }
 }

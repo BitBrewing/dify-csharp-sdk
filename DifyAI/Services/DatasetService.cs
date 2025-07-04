@@ -2,6 +2,7 @@
 using DifyAI.ObjectModels;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -200,7 +201,49 @@ namespace DifyAI.Services
             UseDatasetApiKey();
             try
             {
-                return await _httpClient.PostAsAsync<DatasetRetrieveResponse>($"/datasets/{request.DatasetId}/retrieve", request, cancellationToken);
+                return await _httpClient.PostAsAsync<DatasetRetrieveResponse>($"datasets/{request.DatasetId}/retrieve", request, cancellationToken);
+            }
+            finally
+            {
+                UseDefaultApiKey();
+            }
+        }
+
+        public async Task<DatasetGetResponse> GetDatasetAsync(DatasetGetRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            UseDatasetApiKey();
+            try
+            {
+                return await _httpClient.GetAsAsync<DatasetGetResponse>($"datasets/{request.DatasetId}", request, cancellationToken);
+            }
+            finally
+            {
+                UseDefaultApiKey();
+            }
+        }
+
+        public async Task<DatasetUpdateResponse> UpdateDatasetAsync(DatasetUpdateRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            UseDatasetApiKey();
+            try
+            {
+                return await _httpClient.PatchAsAsync<DatasetUpdateResponse>($"datasets/{request.DatasetId}", request, cancellationToken);
+            }
+            finally
+            {
+                UseDefaultApiKey();
+            }
+        }
+
+        public async Task<DatasetGetTextEmbeddingModelsResponse> GetTextEmbeddingModelsAsync(DatasetGetTextEmbeddingModelsRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            UseDatasetApiKey();
+            try
+            {
+                return await _httpClient.GetAsAsync<DatasetGetTextEmbeddingModelsResponse>("workspaces/current/models/model-types/text-embedding", request, cancellationToken);
             }
             finally
             {

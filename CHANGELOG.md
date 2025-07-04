@@ -1,5 +1,22 @@
 # 更新历史
 
+## 3.8.0
+- 新增：获取会话变量列表`Conversations.ListVariablesAsync`（贡献者 [@AlexChim1231](https://github.com/AlexChim1231)，PR [#28](https://github.com/BitBrewing/dify-csharp-sdk/pull/28)）
+
+## 3.7.4
+- 修改：运行工作流时，Inputs允许传递obj类型的参数；Files 打过时标记（贡献者 [@jason-lee-x](https://github.com/jason-lee-x)，PR [#27](https://github.com/BitBrewing/dify-csharp-sdk/pull/27)）
+
+## 3.7.3
+- 修复`Datasets.UpdateDatasetAsync`会出现`The JSON value could not be converted to System.Boolean`错误的问题 [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2909082934)
+
+## 3.7.2
+- 修复 3.7.0 新增的三个接口报404的问题 [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2892806931)
+
+## 3.7.0
+- 新增：查看知识库详情`Datasets.GetDatasetAsync` [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2870547089)
+- 新增：修改知识库详情`Datasets.UpdateDatasetAsync` [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2870547089)
+- 新增：获取嵌入模型列表`Datasets.GetTextEmbeddingModelsAsync` [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2870547089)
+
 ## 3.6.0
 - 新增：请求参数添加`BaseDomain`，以解决多个Dify服务器的情况下，一个BaseDomain不够的问题（贡献者 [@ZeroZ-lab](https://github.com/Rendtime)，PR [#18](https://github.com/BitBrewing/dify-csharp-sdk/pull/18)）
 - 新增：响应内容增加`RawJson`原始Json字符串（贡献者 [@ZeroZ-lab](https://github.com/Rendtime)，PR [#18](https://github.com/BitBrewing/dify-csharp-sdk/pull/18)）

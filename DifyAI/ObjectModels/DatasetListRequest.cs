@@ -2,7 +2,7 @@
 
 namespace DifyAI.ObjectModels
 {
-    public class DatasetListRequest
+    public class DatasetListRequest: RequestBase
     {
         /// <summary>
         /// Page number(optional)
