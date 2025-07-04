@@ -41,8 +41,8 @@ namespace DifyAI
                 {
                     host.Path += "/";
                 }
-
-                httpClient.BaseAddress = host.Uri;
+                if (httpClient.BaseAddress != host.Uri)
+                    httpClient.BaseAddress = host.Uri;
             }
         }
 
