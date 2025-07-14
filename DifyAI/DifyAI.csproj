@@ -7,7 +7,7 @@
     <Authors>BitBrewing</Authors>
     <Company>Yiqifei</Company>
     <Description>DifyAI SDK https://dify.ai/</Description>
-    <Version>3.8.0</Version>
+    <Version>3.9.0</Version>
     <PackageProjectUrl>https://github.com/BitBrewing/dify-csharp-sdk</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>dify</PackageTags>
@@ -17,7 +17,6 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>Logo.png</PackageIcon>
     <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
-    <PackageId>BJSoft.$(AssemblyName)</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

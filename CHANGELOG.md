@@ -1,5 +1,10 @@
 # 更新历史
 
+## 3.9.0
+- 修复：修复了 ChatService 中的 JSON 反序列化错误（该服务用于连接带有知识库的聊天会话），Dify 1.4.3 版本。（贡献者 [@henrybjsoft](https://github.com/henrybjsoft)，PR [#29](https://github.com/BitBrewing/dify-csharp-sdk/pull/29)）
+- 新增：`Workflows.GetRunDetailsAsync`（贡献者 [@AlexChim1231](https://github.com/AlexChim1231)，PR [#30](https://github.com/BitBrewing/dify-csharp-sdk/pull/30)）
+- 修复：httpClient发送后，避免重设BaseAddress（贡献者 [@Rendtime](https://github.com/Rendtime)，PR [#33](https://github.com/BitBrewing/dify-csharp-sdk/pull/33)）
+
 ## 3.8.0
 - 新增：获取会话变量列表`Conversations.ListVariablesAsync`（贡献者 [@AlexChim1231](https://github.com/AlexChim1231)，PR [#28](https://github.com/BitBrewing/dify-csharp-sdk/pull/28)）
 
@@ -18,8 +23,8 @@
 - 新增：获取嵌入模型列表`Datasets.GetTextEmbeddingModelsAsync` [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16#issuecomment-2870547089)
 
 ## 3.6.0
-- 新增：请求参数添加`BaseDomain`，以解决多个Dify服务器的情况下，一个BaseDomain不够的问题（贡献者 [@ZeroZ-lab](https://github.com/Rendtime)，PR [#18](https://github.com/BitBrewing/dify-csharp-sdk/pull/18)）
-- 新增：响应内容增加`RawJson`原始Json字符串（贡献者 [@ZeroZ-lab](https://github.com/Rendtime)，PR [#18](https://github.com/BitBrewing/dify-csharp-sdk/pull/18)）
+- 新增：请求参数添加`BaseDomain`，以解决多个Dify服务器的情况下，一个BaseDomain不够的问题（贡献者 [@Rendtime](https://github.com/Rendtime)，PR [#18](https://github.com/BitBrewing/dify-csharp-sdk/pull/18)）
+- 新增：响应内容增加`RawJson`原始Json字符串（贡献者 [@Rendtime](https://github.com/Rendtime)，PR [#18](https://github.com/BitBrewing/dify-csharp-sdk/pull/18)）
 
 ## 3.5.0
 - 新增：获取应用基本信息接口`Applications.InfoAsync` [#16](https://github.com/BitBrewing/dify-csharp-sdk/issues/16)
