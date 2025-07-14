@@ -33,5 +33,10 @@ namespace DifyAI.Services
         {
             await _httpClient.PostAsync($"workflows/tasks/{Uri.EscapeDataString(request.TaskId)}/stop", request, cancellationToken);
         }
+
+        public async Task<WorkflowRunDetailResponse> GetRunDetailsAsync(WorkflowRunDetailRequest request, CancellationToken cancellationToken = default)
+        {
+            return await _httpClient.GetAsAsync<WorkflowRunDetailResponse>($"workflows/run/{Uri.EscapeDataString(request.WorkflowId)}", request, cancellationToken);
+        }
     }
 }
