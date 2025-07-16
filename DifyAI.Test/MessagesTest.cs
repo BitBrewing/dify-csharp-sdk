@@ -20,5 +20,21 @@ namespace DifyAI.Test
             var rsp = await _difyAIService.Messages.HistoryAsync(req);
 
         }
+
+        [Fact]
+        public async Task Suggested()
+        {
+            var message = await _difyAIService.ChatMessages.ChatAsync(new ChatCompletionRequest
+            {
+                Query = "who are you?",
+                User = "user123",
+            });
+            var suggested = await _difyAIService.Messages.SuggestedAsync(new MessageSuggestedRequest
+            {
+                MessageId = message.MessageId,
+                User = "user123",
+            });
+            Assert.NotNull(suggested.Data);
+        }
     }
 }
