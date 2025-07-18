@@ -27,5 +27,15 @@ namespace DifyAI.Test
                 User = "user123"
             });
         }
+
+        [Fact]
+        public async Task Site()
+        {
+            var rsp = await _difyAIService.Applications.SiteAsync(new ApplicationWebappRequest
+            {
+                User = "user123"
+            });
+            Assert.NotEmpty(rsp.Title);
+        }
     }
 }

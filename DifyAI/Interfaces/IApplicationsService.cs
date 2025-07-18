@@ -33,5 +33,14 @@ namespace DifyAI.Interfaces
         /// <returns></returns>
         Task<ApplicationInfoResponse> InfoAsync(ApplicationInfoRequest request,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 获取应用的WebApp设置
+        /// </summary>
+        /// <param name="request">请求参数</param>
+        /// <param name="cancellationToken">取消令牌</param>
+        /// <returns></returns>
+        public Task<ApplicationWebappResponse> SiteAsync(ApplicationWebappRequest request,
+            CancellationToken cancellationToken = default);
     }
 }
