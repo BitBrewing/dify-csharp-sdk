@@ -1,5 +1,9 @@
 # 更新历史
 
+## 3.10.0
+- 新增：`Applications.SiteAsync`（贡献者 [@LGinC](https://github.com/LGinC)，PR [#34](https://github.com/BitBrewing/dify-csharp-sdk/pull/34)）
+- 修复：`Messages.SuggestedAsync`接口缺少`User`参数（贡献者 [@LGinC](https://github.com/LGinC)，PR [#34](https://github.com/BitBrewing/dify-csharp-sdk/pull/34)）
+
 ## 3.9.0
 - 修复：修复了 ChatService 中的 JSON 反序列化错误（该服务用于连接带有知识库的聊天会话），Dify 1.4.3 版本。（贡献者 [@henrybjsoft](https://github.com/henrybjsoft)，PR [#29](https://github.com/BitBrewing/dify-csharp-sdk/pull/29)）
 - 新增：`Workflows.GetRunDetailsAsync`（贡献者 [@AlexChim1231](https://github.com/AlexChim1231)，PR [#30](https://github.com/BitBrewing/dify-csharp-sdk/pull/30)）
