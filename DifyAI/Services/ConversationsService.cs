@@ -30,5 +30,10 @@ namespace DifyAI.Services
         {
             return await _httpClient.GetAsAsync<ConversationVariableListResponse>($"conversations/{Uri.EscapeDataString(request.ConversationId)}/variables?user={Uri.EscapeDataString(request.User)}", request, cancellationToken);
         }
+
+        public async Task<ConversationVariableUpdateResponse> UpdateVariableAsync(ConversationVariableUpdateRequest request, CancellationToken cancellationToken = default)
+        {
+            return await _httpClient.PutAsync<ConversationVariableUpdateResponse>($"conversations/{Uri.EscapeDataString(request.ConversationId)}/variables/{Uri.EscapeDataString(request.VariableId)}", request, cancellationToken);
+        }
     }
 }

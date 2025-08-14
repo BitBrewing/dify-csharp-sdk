@@ -99,6 +99,26 @@ namespace DifyAI
 
             return await responseMessage.ResolveAsAsync<T>(cancellationToken);
         }
+        
+        public static async Task<T> PutAsync<T>(this HttpClient httpClient, string requestUri, IRequest requestModel,
+            CancellationToken cancellationToken) where T : ResponseBase
+        {
+            httpClient.AddAuthorization(requestModel.ApiKey, requestModel.BaseDomain);
+            using var content =
+                JsonContent.Create(requestModel, requestModel.GetType(), null, _defaultSerializerOptions);
+            
+#if !NETSTANDARD2_0
+            using var responseMessage = await httpClient.PutAsync(requestUri, content, cancellationToken);
+#else
+            var request = new HttpRequestMessage(new HttpMethod("PUT"), requestUri)
+            {
+                Content = content
+            };
+            using var responseMessage = await httpClient.SendAsync(request, cancellationToken);
+#endif
+            
+            return await responseMessage.ResolveAsAsync<T>(cancellationToken);
+        }
 
         public static async Task<T> PatchAsAsync<T>(this HttpClient httpClient, string requestUri,
             IRequest requestModel,
