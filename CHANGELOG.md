@@ -1,5 +1,9 @@
 # 更新历史
 
+## 3.11.0
+- 新增：实现了更新会话变量的功能（贡献者 [@AlexChim1231](https://github.com/AlexChim1231)，PR [#36](https://github.com/BitBrewing/dify-csharp-sdk/pull/36)）
+- 新增：为消`MessageFile`添加缺失的字段（贡献者 [@AlexChim1231](https://github.com/AlexChim1231)，PR [#36](https://github.com/BitBrewing/dify-csharp-sdk/pull/37)）
+
 ## 3.10.0
 - 新增：`Applications.SiteAsync`（贡献者 [@LGinC](https://github.com/LGinC)，PR [#34](https://github.com/BitBrewing/dify-csharp-sdk/pull/34)）
 - 修复：`Messages.SuggestedAsync`接口缺少`User`参数（贡献者 [@LGinC](https://github.com/LGinC)，PR [#34](https://github.com/BitBrewing/dify-csharp-sdk/pull/34)）

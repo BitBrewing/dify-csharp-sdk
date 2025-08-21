@@ -20,7 +20,10 @@ namespace DifyAI.Test
 
             services.Configure<DifyAIOptions>(config.GetSection("DifyAI"));
 
-            services.AddDifyAIService();
+            services.AddDifyAIService().ConfigureHttpClient(httpClient =>
+            {
+	            httpClient.Timeout = TimeSpan.FromSeconds(10);
+            });
 
             var app = services.BuildServiceProvider();
             _difyAIService = app.GetRequiredService<IDifyAIService>();
