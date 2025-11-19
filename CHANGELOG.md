@@ -1,6 +1,6 @@
 # 更新历史
 
-## 3.12.0
+## 3.12.1
 - 新增：文件上传支持直接使用 Stream，`IUploadRequest` 接口新增 `FileStream` 属性，`UploadAsAsync` 和 `UploadDocumentAsync` 方法现在可以接受文件流或文件路径，无需先保存到磁盘 [#39](https://github.com/BitBrewing/dify-csharp-sdk/issues/39)
 
 ## 3.11.0

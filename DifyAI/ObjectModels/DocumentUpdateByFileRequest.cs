@@ -27,7 +27,7 @@ namespace DifyAI.ObjectModels
         /// 要上传的文件流
         /// </summary>
         [JsonIgnore]
-        public Stream FileStream { get; }
+        public Stream FileStream { get; set; }
 
         /// <summary>
         ///     Source document ID (optional)
