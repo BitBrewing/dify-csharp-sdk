@@ -1,5 +1,8 @@
 # 更新历史
 
+## 3.12.0
+- 新增：文件上传支持直接使用 Stream，`IUploadRequest` 接口新增 `FileStream` 属性，`UploadAsAsync` 和 `UploadDocumentAsync` 方法现在可以接受文件流或文件路径，无需先保存到磁盘 [#39](https://github.com/BitBrewing/dify-csharp-sdk/issues/39)
+
 ## 3.11.0
 - 新增：实现了更新会话变量的功能（贡献者 [@AlexChim1231](https://github.com/AlexChim1231)，PR [#36](https://github.com/BitBrewing/dify-csharp-sdk/pull/36)）
 - 新增：为消`MessageFile`添加缺失的字段（贡献者 [@AlexChim1231](https://github.com/AlexChim1231)，PR [#36](https://github.com/BitBrewing/dify-csharp-sdk/pull/37)）

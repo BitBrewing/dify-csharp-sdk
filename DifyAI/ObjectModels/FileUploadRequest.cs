@@ -16,6 +16,12 @@ namespace DifyAI.ObjectModels
         public string File { get; set; }
 
         /// <summary>
+        /// 要上传的文件流
+        /// </summary>
+        [JsonIgnore]
+        public Stream FileStream { get; }
+
+        /// <summary>
         /// 用户标识，用于定义终端用户的身份，必须和发送消息接口传入 user 保持一致。
         /// </summary>
         [JsonPropertyName("user")]

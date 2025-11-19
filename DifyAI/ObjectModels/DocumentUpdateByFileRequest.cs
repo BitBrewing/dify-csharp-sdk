@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.IO;
+using System.Text.Json.Serialization;
 
 namespace DifyAI.ObjectModels
 {
@@ -21,6 +22,12 @@ namespace DifyAI.ObjectModels
         /// </summary>
         [JsonIgnore]
         public string File { get; set; }
+
+        /// <summary>
+        /// 要上传的文件流
+        /// </summary>
+        [JsonIgnore]
+        public Stream FileStream { get; }
 
         /// <summary>
         ///     Source document ID (optional)

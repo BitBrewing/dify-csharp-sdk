@@ -245,20 +245,60 @@ namespace DifyAI
             httpClient.AddAuthorization(requestModel.ApiKey, requestModel.BaseDomain);
 
             using var multipartContent = new MultipartFormDataContent();
-            using var fileStream = File.OpenRead(requestModel.File);
-            using var streamContent = new StreamContent(fileStream);
+            
+            Stream fileStream;
+            string fileName;
+            string mimeType;
+            bool shouldDisposeStream = false;
+            
+            // 优先使用 FileStream，如果没有则使用 File 路径
+            if (requestModel.FileStream != null)
+            {
+                fileStream = requestModel.FileStream;
+                // 尝试从流中获取文件名，如果是 FileStream 类型
+                if (fileStream is FileStream fs)
+                {
+                    fileName = Path.GetFileName(fs.Name);
+                    mimeType = MimeUtility.GetMimeMapping(fs.Name);
+                }
+                else
+                {
+                    // 如果不是 FileStream，使用默认文件名
+                    fileName = "file";
+                    mimeType = "application/octet-stream";
+                }
+            }
+            else if (!string.IsNullOrEmpty(requestModel.File))
+            {
+                fileStream = File.OpenRead(requestModel.File);
+                fileName = Path.GetFileName(requestModel.File);
+                mimeType = MimeUtility.GetMimeMapping(requestModel.File);
+                shouldDisposeStream = true;
+            }
+            else
+            {
+                throw new ArgumentException("Either File or FileStream must be provided");
+            }
 
-            using var fileContent = new StreamContent(fileStream);
-            var mimeType = MimeUtility.GetMimeMapping(requestModel.File);
-            fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);
+            try
+            {
+                using var fileContent = new StreamContent(fileStream);
+                fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);
 
-            multipartContent.Add(fileContent, "file", Path.GetFileName(requestModel.File));
+                multipartContent.Add(fileContent, "file", fileName);
+                multipartContent.AddObjectFields(requestModel);
 
-            multipartContent.AddObjectFields(requestModel);
+                using var responseMessage = await httpClient.PostAsync(requestUri, multipartContent, cancellationToken);
 
-            using var responseMessage = await httpClient.PostAsync(requestUri, multipartContent, cancellationToken);
-
-            return await responseMessage.ResolveAsAsync<T>(cancellationToken);
+                return await responseMessage.ResolveAsAsync<T>(cancellationToken);
+            }
+            finally
+            {
+                if (shouldDisposeStream)
+                {
+                    fileStream?.Dispose();
+                }
+            }
         }
 
         public static async Task<T> UploadDocumentAsync<T>(this HttpClient httpClient, string requestUri,
@@ -267,20 +307,61 @@ namespace DifyAI
             httpClient.AddAuthorization(requestModel.ApiKey, requestModel.BaseDomain);
 
             using var multipartContent = new MultipartFormDataContent();
-            using var fileStream = File.OpenRead(requestModel.File);
-            using var streamContent = new StreamContent(fileStream);
+            
+            Stream fileStream;
+            string fileName;
+            string mimeType;
+            bool shouldDisposeStream = false;
+            
+            // 优先使用 FileStream，如果没有则使用 File 路径
+            if (requestModel.FileStream != null)
+            {
+                fileStream = requestModel.FileStream;
+                // 尝试从流中获取文件名，如果是 FileStream 类型
+                if (fileStream is FileStream fs)
+                {
+                    fileName = Path.GetFileName(fs.Name);
+                    mimeType = MimeUtility.GetMimeMapping(fs.Name);
+                }
+                else
+                {
+                    // 如果不是 FileStream，使用默认文件名
+                    fileName = "document";
+                    mimeType = "application/octet-stream";
+                }
+            }
+            else if (!string.IsNullOrEmpty(requestModel.File))
+            {
+                fileStream = File.OpenRead(requestModel.File);
+                fileName = Path.GetFileName(requestModel.File);
+                mimeType = MimeUtility.GetMimeMapping(requestModel.File);
+                shouldDisposeStream = true;
+            }
+            else
+            {
+                throw new ArgumentException("Either File or FileStream must be provided");
+            }
 
-            multipartContent.AddObjectAsJsonData(requestModel);
+            try
+            {
+                multipartContent.AddObjectAsJsonData(requestModel);
 
-            using var fileContent = new StreamContent(fileStream);
-            var mimeType = MimeUtility.GetMimeMapping(requestModel.File);
-            fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);
+                using var fileContent = new StreamContent(fileStream);
+                fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(mimeType);
 
-            multipartContent.Add(fileContent, "file", Path.GetFileName(requestModel.File));
+                multipartContent.Add(fileContent, "file", fileName);
 
-            using var responseMessage = await httpClient.PostAsync(requestUri, multipartContent, cancellationToken);
+                using var responseMessage = await httpClient.PostAsync(requestUri, multipartContent, cancellationToken);
 
-            return await responseMessage.ResolveAsAsync<T>(cancellationToken);
+                return await responseMessage.ResolveAsAsync<T>(cancellationToken);
+            }
+            finally
+            {
+                if (shouldDisposeStream)
+                {
+                    fileStream?.Dispose();
+                }
+            }
         }
 
         private static bool IsJsonContentType(HttpResponseMessage response)
